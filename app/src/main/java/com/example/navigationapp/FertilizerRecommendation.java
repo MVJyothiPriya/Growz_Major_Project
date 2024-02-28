@@ -9,19 +9,31 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
-public class AboutusActivity extends AppCompatActivity {
+public class FertilizerRecommendation extends AppCompatActivity {
     DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aboutus);
+        setContentView(R.layout.activity_fertilizer);
         drawerLayout =findViewById(R.id.drawer_layout);
+        WebView webview=findViewById(R.id.webfertilizer);
+        WebSettings webSettings = webview.getSettings();
+        webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        webSettings.setJavaScriptEnabled(true);
 
+        webview.loadUrl("http://16.171.70.35:8080/fertilizer");
+
+
+
+
+
+        //paste link here
 
     }
-
     // MENU OPENS
     public void ClickMenu(View view) {
 
@@ -35,9 +47,9 @@ public class AboutusActivity extends AppCompatActivity {
 
 
     public void Clickhome(View view) {
-        recreate();
-    }
-    public void ClickSurveyform(View view){
+
+        redirectActivity(this, MainActivity.class);
+    }    public void ClickSurveyform(View view){
         redirectActivity(this, CropPrediction.class);
 
     }
@@ -52,10 +64,21 @@ public class AboutusActivity extends AppCompatActivity {
 
     }
     //Crop yield
+    public void ClickDemand(View view){
+        redirectActivity(this, Demand.class);
+
+    }
+
     public void ClickCropYield(View view){
         redirectActivity(this, CropYield.class);
 
     }
+    public void ClickLocationBased(View view){
+        redirectActivity(this, LocationBased.class);
+
+    }
+
+
     //feedback opens
     public void Clickfeedback(View view){
         redirectActivity(this, FeedbackActivity.class);
@@ -73,5 +96,4 @@ public class AboutusActivity extends AppCompatActivity {
         closeDrawer(drawerLayout);
     }
     ////
-
 }

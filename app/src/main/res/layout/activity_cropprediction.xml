@@ -7,7 +7,7 @@
 
     android:id="@+id/drawer_layout"
 
-    tools:context=".SurveyformActivity">
+    tools:context=".CropPrediction">
      <!-- activity main id  layout is written up -->
 
      <!-- -->
@@ -20,13 +20,19 @@
 
           <include
               layout="@layout/toolbar_layout"/>
-          <TextView
+          <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:text="SurveyForm"
-              android:textSize="50sp"
-              android:textStyle="bold"
-              android:gravity="center"/>
+              tools:context=".CropPrediction">
+
+
+               <WebView
+                   android:id="@+id/webcrop"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   />
+          </LinearLayout>
      </LinearLayout>
 
 

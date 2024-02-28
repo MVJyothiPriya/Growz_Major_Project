@@ -34,25 +34,29 @@ public class Officerdesk extends AppCompatActivity {
 
 
     public void Clickhome(View view) {
-        recreate();
-    }
-    public void ClickSurveyform(View view){
-        redirectActivity(this, SurveyformActivity.class);
+
+        redirectActivity(this, MainActivity.class);
+    }    public void ClickSurveyform(View view){
+        redirectActivity(this, CropPrediction.class);
 
     }
     // check status opens
     public void ClickCheckstatus(View view){
-        redirectActivity(this, CheckstatusActivity.class);
+        redirectActivity(this, PlantDisease.class);
 
     }
     //complaintbox opens
     public void ClickComplaintbox(View view){
-        redirectActivity(this, ComplaintboxActivity.class);
+        redirectActivity(this, FertilizerRecommendation.class);
 
     }
     //feedback opens
     public void Clickfeedback(View view){
         redirectActivity(this, FeedbackActivity.class);
+
+    }
+    public void ClickLocationBased(View view){
+        redirectActivity(this, LocationBased.class);
 
     }
     public void ClickLogout(View view)

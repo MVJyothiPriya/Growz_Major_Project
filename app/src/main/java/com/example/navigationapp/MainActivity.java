@@ -48,23 +48,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void Clickhome(View view) {
-        recreate();
-    }
-// survey form opens
+
+        redirectActivity(this, MainActivity.class);
+    }// survey form opens
 public void ClickSurveyform(View view){
-    redirectActivity(this, SurveyformActivity.class);
+    redirectActivity(this, CropPrediction.class);
 
 }
 // check status opens
     public void ClickCheckstatus(View view){
-        redirectActivity(this, CheckstatusActivity.class);
+        redirectActivity(this, PlantDisease.class);
 
     }
 //complaintbox opens
     public void ClickComplaintbox(View view){
-        redirectActivity(this, ComplaintboxActivity.class);
+        redirectActivity(this, FertilizerRecommendation.class);
 
     }
+    public void ClickLocationBased(View view){
+        redirectActivity(this, LocationBased.class);
+
+    }
+    //Crop yield
+    public void ClickCropYield(View view){
+        redirectActivity(this, CropYield.class);
+
+    }
+
     //feedback opens
     public void Clickfeedback(View view){
         redirectActivity(this, FeedbackActivity.class);
@@ -89,9 +99,7 @@ public void ClickSurveyform(View view){
         redirectActivity(this, Officerdesk.class);
     }
     //registration
-    public void openRegistration(View view){
-        redirectActivity(this, Registration.class);
-    }
+
 
 
 

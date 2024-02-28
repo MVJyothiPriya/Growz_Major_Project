@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "698775159670",
+    "firebase_url": "https://feed-98572-default-rtdb.firebaseio.com",
+    "project_id": "feed-98572",
+    "storage_bucket": "feed-98572.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698775159670:android:5b805c59b9bb5a0f2bf057",
+        "android_client_info": {
+          "package_name": "com.example.feed"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUGoU87JhjJoclKwu5St-16MccM1aWxOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698775159670:android:573904f9a082b7052bf057",
+        "android_client_info": {
+          "package_name": "com.example.firebasenotification"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUGoU87JhjJoclKwu5St-16MccM1aWxOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698775159670:android:e55de851c5d5a3362bf057",
+        "android_client_info": {
+          "package_name": "com.example.grown"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUGoU87JhjJoclKwu5St-16MccM1aWxOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698775159670:android:510bfe58955a47f22bf057",
+        "android_client_info": {
+          "package_name": "com.example.navigationapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUGoU87JhjJoclKwu5St-16MccM1aWxOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698775159670:android:510db4ce830bdacf2bf057",
+        "android_client_info": {
+          "package_name": "com.example.notfic"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUGoU87JhjJoclKwu5St-16MccM1aWxOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

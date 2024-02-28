@@ -9,19 +9,26 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
-public class AboutusActivity extends AppCompatActivity {
+
+
+public class LocationBased extends AppCompatActivity {
     DrawerLayout drawerLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aboutus);
-        drawerLayout =findViewById(R.id.drawer_layout);
-
+        setContentView(R.layout.activity_location_based);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        WebView webviewl=findViewById(R.id.weblocation);
+        WebSettings webSettings = webviewl.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webviewl.loadUrl("file:///android_asset/location.html");
 
     }
-
     // MENU OPENS
     public void ClickMenu(View view) {
 
@@ -35,9 +42,9 @@ public class AboutusActivity extends AppCompatActivity {
 
 
     public void Clickhome(View view) {
-        recreate();
-    }
-    public void ClickSurveyform(View view){
+
+        redirectActivity(this, MainActivity.class);
+    }    public void ClickSurveyform(View view){
         redirectActivity(this, CropPrediction.class);
 
     }
@@ -56,6 +63,18 @@ public class AboutusActivity extends AppCompatActivity {
         redirectActivity(this, CropYield.class);
 
     }
+    public void ClickLocationBased(View view){
+        redirectActivity(this, LocationBased.class);
+
+    }
+
+    public void ClickDemand(View view){
+        redirectActivity(this, Demand.class);
+
+    }
+
+
+
     //feedback opens
     public void Clickfeedback(View view){
         redirectActivity(this, FeedbackActivity.class);
@@ -72,6 +91,4 @@ public class AboutusActivity extends AppCompatActivity {
         super.onPause();
         closeDrawer(drawerLayout);
     }
-    ////
-
 }

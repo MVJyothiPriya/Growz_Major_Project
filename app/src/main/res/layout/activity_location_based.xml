@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
 
-    tools:context=".ComplaintboxActivity">
+    tools:context=".LocationBased">
     <!-- -->
 
     <LinearLayout
@@ -17,15 +17,12 @@
 
         <include
             layout="@layout/toolbar_layout"/>
-        <TextView
+        <WebView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Complaint Box"
-            android:textSize="50sp"
-            android:textStyle="bold"
-            android:gravity="center"/>
-    </LinearLayout>
+            android:id="@+id/weblocation"></WebView>
 
+    </LinearLayout>
 
 
     <!--drawer code -->
@@ -45,3 +42,4 @@
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
+

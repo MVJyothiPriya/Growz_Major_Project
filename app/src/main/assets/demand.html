@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Crop Prices</title>
+    <style>
+        /* Add some styling for the suggestion list */
+        .suggestion-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: none;
+            border: 1px solid #ccc;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .suggestion-list li {
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .suggestion-list li:hover {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>Crop Prices</h2>
+
+    <!-- Input Form -->
+    <form>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="stateInput">State</label>
+                <input type="text" class="form-control" id="stateInput" oninput="showStateSuggestions()">
+                <ul id="suggestion-list1" class="suggestion-list"></ul>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="districtInput">District</label>
+                <input type="text" class="form-control" id="districtInput" oninput="showDistrictSuggestions()">
+                <ul id="suggestion-list2" class="suggestion-list"></ul>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="cropInput">Crop</label>
+                <input type="text" class="form-control" id="cropInput" oninput="showCropSuggestions()">
+                <ul id="suggestion-list3" class="suggestion-list"></ul>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="submitForm()">Get Price</button>
+    </form>
+
+    <!-- Output Display -->
+    <div id="output" class="mt-3"></div>
+</div>
+
+<script>
+    const data = [
+        ["Andhra Pradesh", "Alluri Sitharama Raju", "Rice", "Rs. 25,000"],
+        ["Andhra Pradesh", "Anakapalli", "Sugarcane", "Rs. 30,000"],
+        ["Telangana", "Hanumakonda", "Rice", "Rs. 30,000"],
+        ["Andhra Pradesh", "Alluri Sitharama Raju", "Cotton", "Rs. 28,000"],
+        ["Nagaland", "Wokha", "Soybeans", "Rs. 41,000"],
+        ["Nagaland", "Tuensang", "Lentils", "Rs. 45,000"],
+        ["Arunchal Pradesh", "Itanagar", "Rice", "Rs. 30,000"],
+        ["Arunchal Pradesh", "Tawang", "Apples", "Rs. 35,000"],
+
+        
+    ];
+
+    const states = Array.from(new Set(data.map(item => item[0])));
+    const districts = {};
+    const crops = {};
+
+    data.forEach(item => {
+        const state = item[0];
+        const district = item[1];
+        const crop = item[2];
+
+        if (!districts[state]) {
+            districts[state] = [];
+        }
+        if (!crops[district]) {
+            crops[district] = [];
+        }
+
+        if (!districts[state].includes(district)) {
+            districts[state].push(district);
+        }
+
+        if (!crops[district].includes(crop)) {
+            crops[district].push(crop);
+        }
+    });
+
+    function showStateSuggestions() {
+        const stateInput = document.getElementById("stateInput");
+        const suggestionList = document.getElementById("suggestion-list1");
+        const inputValue = stateInput.value.toLowerCase();
+
+        const filteredStates = states.filter((state) => state.toLowerCase().includes(inputValue));
+
+        updateSuggestions(suggestionList, filteredStates, stateInput);
+    }
+
+    function showDistrictSuggestions() {
+        const stateInput = document.getElementById("stateInput");
+        const districtInput = document.getElementById("districtInput");
+        const stateValue = stateInput.value;
+        const suggestionList = document.getElementById("suggestion-list2");
+        const inputValue = districtInput.value.toLowerCase();
+
+        const filteredDistricts = (districts[stateValue] || []).filter((district) => district.toLowerCase().includes(inputValue));
+
+        updateSuggestions(suggestionList, filteredDistricts, districtInput);
+    }
+
+    function showCropSuggestions() {
+        const districtInput = document.getElementById("districtInput");
+        const cropInput = document.getElementById("cropInput");
+        const districtValue = districtInput.value;
+        const suggestionList = document.getElementById("suggestion-list3");
+        const inputValue = cropInput.value.toLowerCase();
+
+        const filteredCrops = (crops[districtValue] || []).filter((crop) => crop.toLowerCase().includes(inputValue));
+
+        updateSuggestions(suggestionList, filteredCrops, cropInput);
+    }
+
+    function updateSuggestions(suggestionList, suggestions, inputElement) {
+        suggestionList.innerHTML = "";
+        suggestions.forEach((option) => {
+            const li = document.createElement("li");
+            li.textContent = option;
+            li.onclick = function () {
+                inputElement.value = option;
+                suggestionList.style.display = "none";
+            };
+            suggestionList.appendChild(li);
+        });
+
+        if (suggestions.length > 0) {
+            suggestionList.style.display = "block";
+        } else {
+            suggestionList.style.display = "none";
+        }
+    }
+
+    function submitForm() {
+        const stateInputValue = document.getElementById("stateInput").value;
+        const districtInputValue = document.getElementById("districtInput").value;
+        const cropInputValue = document.getElementById("cropInput").value;
+        const outputElement = document.getElementById("output");
+
+        const price = data.find(item =>
+            item[0].toLowerCase() === stateInputValue.toLowerCase() &&
+            item[1].toLowerCase() === districtInputValue.toLowerCase() &&
+            item[2].toLowerCase() === cropInputValue.toLowerCase()
+        );
+ if (price) {
+            outputElement.innerHTML = `<p>State: ${stateInputValue}</p><p>District: ${districtInputValue}</p><p>Crop: ${cropInputValue}</p><p>Price (per acre): ${price[3]}</p>`;
+        } else {
+            outputElement.innerHTML = `<p>No data found for the specified input.</p>`;
+        }
+    }
+</script>
+
+</body>
+</html>

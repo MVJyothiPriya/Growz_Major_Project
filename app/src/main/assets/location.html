@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Auto Suggestion Form</title>
+      <!-- Add Bootstrap CSS -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+      <style>
+         body {
+         font-family: "Arial", sans-serif;
+         background-color: #f8f9fa;
+         margin: 20px;
+         }
+         h1 {
+         text-align: center;
+         color: #007bff;
+         }
+         form {
+         max-width: 400px;
+         margin: 0 auto;
+         background-color: #fff;
+         padding: 20px;
+         border-radius: 10px;
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+         }
+         label {
+         font-weight: bold;
+         margin-top: 10px;
+         display: block;
+         }
+         input {
+         width: 100%;
+         padding: 8px;
+         margin-bottom: 15px;
+         border: 1px solid #ced4da;
+         border-radius: 5px;
+         box-sizing: border-box;
+         }
+         ul {
+         list-style: none;
+         padding: 0;
+         margin: 0;
+         display: none;
+         border: 1px solid #ccc;
+         border-radius: 5px;
+         }
+         li {
+         cursor: pointer;
+         padding: 8px;
+         border-bottom: 1px solid #ccc;
+         }
+         button {
+         background-color: #007bff;
+         color: #fff;
+         padding: 10px 15px;
+         border: none;
+         border-radius: 5px;
+         cursor: pointer;
+         }
+         button:hover {
+         background-color: #0056b3;
+         }
+         #output {
+         margin-top: 20px;
+         }
+      </style>
+   </head>
+   <body>
+      <h1>Location based crop</h1>
+      <form id="myForm">
+         <label for="stateInput">State:</label>
+         <input type="text" id="stateInput" oninput="showStateSuggestions(); resetDistrictField()" required />
+         <ul id="suggestion-list1"></ul>
+         <label for="districtInput">District:</label>
+         <input type="text" id="districtInput" oninput="showDistrictSuggestions(); " required />
+         <ul id="suggestion-list2"></ul>
+		 <label id="requiredMessage" style="color:red; display:none;">Please fill out both State and District fields.</label>
+         <button type="button" onclick="submitForm()">Submit</button>
+      </form>
+      <div id="output"></div>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      <script>
+         // Mock data for states, districts, and crops
+         const states = [
+             "Andhra Pradesh",
+             "Arunachal Pradesh",
+             "Assam",
+             "Bihar",
+             "Chhattisgarh",
+             "Goa",
+             "Gujarat",
+             "Haryana",
+             "Himachal Pradesh",
+             "Jharkhand",
+             "Karnataka",
+             "Kerala",
+             "Madhya Pradesh",
+             "Maharashtra",
+             "Manipur",
+             "Meghalaya",
+             "Mizoram",
+             "Nagaland",
+             "Odisha",
+             "Punjab",
+             "Rajasthan",
+             "Sikkim",
+             "Tamil Nadu",
+             "Telangana",
+             "Tripura",
+             "Uttar Pradesh",
+             "West Bengal",
+         ];
+         const districts = {
+             "Andhra Pradesh": [
+                 "Alluri Sitharama Raju",
+                 "Anakapalli",
+                 "Ananthapuram",
+                 "Annamayya",
+                 "Bapatla",
+                 "Chittoor",
+                 "East Godavari",
+                 "Eluru",
+                 "Guntur",
+                 "Kakinada",
+                 "Kona Seema",
+                 "Krishna",
+                 "Kurnool",
+                 "Manyam",
+                 "NTR District",
+                 "Nandyal",
+                 "Palnadu",
+                 "Prakasam",
+                 "SPS Nellore",
+                 "Sri Balaji Dist",
+                 "Sri Satyasai District",
+                 "Srikakulam",
+                 "Vishakhapatnam",
+                 "Vizianagaram",
+                 "West Godavari",
+                 "YSR Kadapa",
+             ],
+         
+             Telangana: [
+                 "Adilabad",
+                 "Bhadradri Kothagudem",
+                 "Hanumakonda",
+                 "Hyderabad",
+                 "Jagtial",
+                 "Jangaon",
+                 "Jayashankar Bhoopalpally",
+                 "Jogulamba Gadwal",
+                 "Kamareddy",
+                 "Karimnagar",
+                 "Khammam",
+                 "Komaram bheem asifabad",
+                 "Mahabubabad",
+                 "Mahbubnagar",
+                 "Mancherial",
+                 "Medak",
+                 "Medchal-Malkajgiri",
+                 "Mulug",
+                 "Nagarkurnool",
+                 "Nalgonda",
+                 "Narayanpet",
+                 "Nizamabad",
+                 "Nirmal",
+                 "Peddapalli",
+                 "Rajanna Siricilla",
+                 "Rangareddy",
+                 "Sangareddy",
+                 "Siddipet",
+                 "Suryapet",
+                 "Vikarabad",
+                 "Wanaparthy",
+                 "Warangal",
+                 "Yadadri",
+             ],
+             Karnataka: [
+                 "Bagalkot",
+                 "Ballari",
+                 "Belagavi",
+                 "Bengaluru(urban)",
+                 "Bengaluru(rural)",
+                 "Bidar",
+                 "Chamarajanagar",
+                 "Chikballapur",
+                 "Chikkamagaluru",
+                 "Chitradurga",
+                 "Dakshina Kannada",
+                 "Davangere",
+                 "Dharwad",
+                 "Gadag",
+                 "Hassan",
+                 "Haveri",
+                 "Kalaburagi(gulbarga)",
+                 "Kodagu",
+                 "Kolar",
+                 "Koppal",
+                 "Mandhya",
+                 "Mysuru",
+                 "Raichur",
+                 "Ramanagara",
+                 "Shivamogga",
+                 "Tumakuru",
+                 "Udupi",
+                 "Uttara Kannada",
+                 "Vijayapura",
+                 "Yadgir",
+             ],
+             Kerala: ["Alappuzha", "Ernakulam", "Idukki", "Kannur", "Kasaragod", "Kollam", "Kottayam", "Kozhikode", "Malappuram", "Palakkad", "Pathanamthitta", "Thiruvananthapuram", "Thrissur", "Wayanad"],
+         
+             Tamilnadu: [
+                 "Ariyalur",
+                 "Chengalpattu",
+                 "Chennai",
+                 "Coimbatore",
+                 "Cuddalore",
+                 "Dharmapuri",
+                 "Dindigul",
+                 "Erode",
+                 "Kallakurichi",
+                 "Kanchipuram",
+                 "Kanyakumari",
+                 "Karur",
+                 "Krishnagiri",
+                 "Madurai",
+                 "Nagapattinam",
+                 "Namakkal",
+                 "Nilgiris",
+                 "Perambalur",
+                 "Pudukkottai",
+                 "Ramanathapuram",
+                 "Ranipet",
+                 "Salem",
+                 "Sivaganga",
+                 "Tenkasi",
+                 "Thanjavur",
+                 "Theni",
+                 "Thoothukudi",
+                 "Tiruchirapalli",
+                 "Tirunelveli",
+                 "Tirupathur",
+                 "Tiruppur",
+                 "Tiruvallur",
+                 "Tiruvannamalai",
+                 "Tiruvarur",
+                 "Vellore",
+                 "Viluppuram",
+                 "Virudhunagar",
+             ],
+         
+             Odisha: [
+                 "Balangir",
+                 "Balasore",
+                 "Bargarh",
+                 "Bhadrak",
+                 "Boudh",
+                 "Cuttack",
+                 "Deogarh",
+                 "Dhenkanal",
+                 "Gajapati",
+                 "Ganjam",
+                 "Jagatsinghapur",
+                 "Jajpur",
+                 "Jharsuguda",
+                 "Kalahandi",
+                 "Kandhamal",
+                 "Kendujhar",
+                 "Khordha",
+                 "Koraput",
+                 "Malkangiri",
+                 "Mayurbhanj",
+                 "Nabarangpur",
+                 "Nayagarh",
+                 "Nuapada",
+                 "Puri",
+                 "Rayagada",
+                 "Sambalpur",
+                 "Sonepur",
+                 "Sundargarh",
+             ],
+         
+             "West Bengal": [
+                 "Alipurduar",
+                 "Bankura",
+                 "Birbhum",
+                 "Cooch Behar",
+                 "Dakshin Dinajpur",
+                 "Darjeeling",
+                 "Hooghly",
+                 "Howrah",
+                 "Jalpaiguri",
+                 "Jhargram",
+                 "Kalimpong",
+                 "Kolkata",
+                 "Malda",
+                 "Murshidabad",
+                 "Nadia",
+                 "North 24 Parganas",
+                 "Paschim Medinipur",
+                 "Paschim Burdwan",
+                 "Purba Burdwan",
+                 "Purba Medinipur",
+                 "Purulia",
+                 "South 24 Parganas",
+                 "Uttar Dinajpur",
+             ],
+         
+             Bihar: [
+                 "Araria",
+                 "Arwal",
+                 "Aurangabad",
+                 "Banka",
+                 "Begusarai",
+                 "Bhagalpur",
+                 "Bhojpur",
+                 "Buxar",
+                 "Darbhanga",
+                 "East Champaran",
+                 "Gaya",
+                 "Gopalganj",
+                 "Jamui",
+                 "Jehanabad",
+                 "Kaimur",
+                 "Katihar",
+                 "Khagaria",
+                 "Kishanganj",
+                 "Lakhisarai",
+                 "Madhepura",
+                 "Madhubani",
+                 "Munger",
+                 "Muzaffarpur",
+                 "Nalanda",
+                 "Nawada",
+                 "Patna",
+                 "Purnia",
+                 "Rohtas",
+                 "Saharsa",
+                 "Samastipur",
+                 "Saran",
+                 "Sheikhpura",
+                 "Sheohar",
+                 "Sitamarhi",
+                 "Siwan",
+                 "Supaul",
+                 "Vaishali",
+                 "West Champaran",
+             ],
+         
+             Maharashtra: [
+                 "Ahmednagar",
+                 "Akola",
+                 "Amravati",
+                 "Aurangabad",
+                 "Beed",
+                 "Bhandara",
+                 "Buldhana",
+                 "Chandrapur",
+                 "Dhule",
+                 "Gadchiroli",
+                 "Gondia",
+                 "Hingoli",
+                 "Jalgaon",
+                 "Jalna",
+                 "Kolhapur",
+                 "Latur",
+                 "Mumbai City",
+                 "Nagpur",
+                 "Nanded",
+                 "Nandurbar",
+                 "Nashik",
+                 "Osmanabad",
+                 "Palghar",
+                 "Parbhani",
+                 "Pune",
+                 "Raigad",
+                 "Ratnagiri",
+                 "Sangli",
+                 "Satara",
+                 "Sindhudurg",
+                 "Solapur",
+                 "Thane",
+                 "Wardha",
+                 "Washim",
+                 "Yavatmal",
+             ],
+             Gujarat: ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar", "Junagadh", "Gandhinagar", "Jamnagar", "Bharuch", "Kutch"],
+         
+             Rajasthan: ["Jaipur", "Jodhpur", "Kota", "Bikaner", "Ajmer", "Udaipur", "Alwar", "Sikar", "Banswara", "Dungarpur"],
+             "Uttar Pradesh": ["Lucknow", "Kanpur", "Ghaziabad", "Varanasi", "Allahabad", "Agra", "Meerut", "Aligarh", "Moradabad", "Bareilly"],
+             "Madhya Pradesh": ["Bhopal", "Jabalpur", "Gwalior", "Ujjain", "Sagar", "Dewas", "Satna", "Ratlam", "Rewa"],
+         
+             Chhattisgarh: ["Raipur", "Bilaspur", "Durg", "Bastar", "Raigarh"],
+             Jharkhand: ["Ranchi", "Dhanbad", "Jamshedpur", "Bokaro", "Hazaribagh"],
+         
+             Assam: ["Guwahati", "Dibrugarh", "Jorhat", "Silchar", "Nagaon"],
+         
+             "Punjab ": ["Ludhiana", "Amritsar", "Jalandhar", "Patiala", "Bathinda"],
+         
+             Haryana: ["Faridabad", "Gurgaon", "Rohtak", "Hisar", "Karnal"],
+         
+             Meghalaya: ["East Khasi Hills", "West Garo Hills", "West Khasi Hills", "East Garo Hills"],
+         
+             Mizoram: ["Aizawl", "Lunglei", "Champhai", "Saiha", "Serchhip"],
+             Nagaland: ["Dimapur", "Kohima", "Mokokchung", "Tuensang", "Wokha"],
+         
+             Tripura: ["West Tripura", "South Tripura", "Dhalai", "North Tripura", "Sepahijala", "Khowai", "Gomati", "Unakoti", "Sipahijala", "Belonia"],
+             Goa: ["North Goa", "South Goa"],
+             Chhattisgarh: ["Raipur", "Bilaspur", "Durg", "Bastar", "Surguja"],
+         
+             "Himachal pradesh": ["Shimla", "Kangra", "Mandi", "Solan", "Una"],
+             Sikkim: ["East Sikkim", "West Sikkim", "North Sikkim", "South Sikkim", "Pakyong"],
+         
+             "Arunachal Pradesh": ["Tawang", "West Kameng", "East Kameng", "Papum Pare", "Lower Subansiri"],
+         
+             Manipur: ["Imphal West", "Imphal East", "Thoubal", "Bishnupur", "Churachandpur"],
+         };
+         const crops = {
+             "Alluri Sitharama Raju": ["Coffee", "Turmeric", "Ginger", "Pineapple", "Jackfruit", "Cashew"],
+             Anakapalli: ["Cashew", "Mango", "Coconut", "Oilpalm", "Papaya", "Guava", "Vegetables"],
+             Ananthapuram: ["Peanuts", "Bengal gram", "Sunflower", "Rice", "Red gram", "Sorghum", "Maize", "Cotton", "Ragi"],
+             Annamayya: ["Paddy", "Groundnut", "Sunflower", "Cotton", "Betel Leaves"],
+             Bapatla: ["Rice", "Chillies", "Tobacco", "Cotton", "Groundnuts", "Maize", "Sugarcane", "Mangoes"],
+             Chittoor: ["Mangoes", "Groundnuts", "Sugarcane", "Maize", "Rice", "Tomatoes", "Grapes", "Peanuts", "Papaya"],
+             "East Godavari": ["Rice", "Coconut", "Sugarcane", "Banana", "Cashew", "Mango", "Oilseeds", "Betel leaves", "Vegetables", "Paddy"],
+             Eluru: ["Vegetables", "Rice", "Sugarcane", "Paddy", "Coconut", "Banana", "Mango", "Cashew", "Oilseeds", "Betel leaves"],
+             Guntur: ["Chillies", "Tobacco", "Cotton", "Paddy (rice)", "Maize", "Groundnuts", "Turmeric", "Mangoes", "Sugarcane", "Vegetables"],
+             Kakinada: ["Rice", "Coconut", "Sugarcane", "Banana", "Cashew", "Mango", "Oilseeds", "Betel leaves", "Vegetables", "Paddy"],
+             "Kona Seema": ["Rice", "Coconut", "Sugarcane", "Banana", "Mango", "Cashew", "Betel leaves", "Vegetables", "Paddy", "Palmyra Palm"],
+             Krishna: ["Rice", "Sugarcane", "Mango", "Banana", "Chillies", "Groundnuts", "Maize", "Tobacco", "Vegetables", "Paddy"],
+             Kurnool: ["Groundnuts", "Cotton", "Sunflower", "Rice", "Maize", "Bengal gram", "Red gram (pigeon pea)", "Sugarcane", "Mangoes", "Jowar (sorghum)"],
+             Manyam: ["Rice", "Groundnut", "Mesta", "Sugarcane", "Maize", "Ragi", "Bajra", "Pulses", "Cashews", "Oilpalms"],
+             "NTR District": ["Rice", "Sugarcane", "Mango", "Banana", "Chillies", "Groundnuts", "Maize", "Tobacco", "Vegetables", "Paddy"],
+             Nandyal: ["Groundnuts", "Cotton", "Sunflower", "Rice", "Maize", "Bengal gram", "Red gram (pigeon pea)", "Sugarcane", "Mangoes", "Jowar (sorghum)"],
+             Palnadu: ["Paddy (rice)", "Chillies", "Tobacco", "Cotton", "Groundnuts", "Maize", "Sugarcane", "Mangoes", "Vegetables", "Pulses"],
+             Prakasam: ["Rice", "Tobacco", "Cotton", "Chillies", "Pulses", "Groundnuts", "Maize", "Vegetables", "Mangoes", "Sugarcane"],
+             "SPS Nellore": ["Rice", "Sugarcane", "Tobacco", "Chillies", "Groundnuts", "Pulses", "Mangoes", "Cashew nuts", "Coconut", "Vegetables"],
+             "Sri Balaji Dist": ["Mangoes", "Groundnuts", "Sugarcane", "Maize", "Rice", "Tomatoes", "Grapes", "Peanuts", "Papaya", "Silk"],
+             "Sri Satyasai District": ["Peanuts", "Bengal gram", "Sunflower", "Rice", "Red gram", "Sorghum", "Maize", "Cotton", "Ragi"],
+             Srikakulam: ["Paddy (rice)", "Cashew nuts", "Coconut", "Sugarcane", "Mangoes", "Groundnuts", "Pulses", "Maize", "Vegetables", "Betel leaves"],
+             Vishakhapatnam: ["Paddy (rice)", "Cashew nuts", "Coconut", "Sugarcane", "Mangoes", "Groundnuts", "Pulses", "Maize", "Vegetables", "Betel leaves"],
+             Vizianagaram: ["Paddy (rice)", "Cashew nuts", "Coconut", "Sugarcane", "Mangoes", "Groundnuts", "Pulses", "Maize", "Vegetables", "Betel leaves"],
+             "West Godavari": ["Rice", "Sugarcane", "Coconut", "Banana", "Mango", "Cashew", "Oilseeds", "Betel leaves", "Vegetables", "Paddy"],
+             "YSR Kadapa": ["Groundnuts", "Bengal gram (Chana dal)", "Red gram (pigeon pea)", "Sunflower", "Jowar (sorghum)", "Maize", "Paddy (rice)", "Cotton", "Mangoes", "Sugarcane"],
+             Adilabad: ["Cotton", "Paddy", "Maize", "Turmeric", "Soybean"],
+             "Bhadradri Kothagudem": ["Rice", "Cotton", "Chillies", "Turmeric", "Maize"],
+             Hanumakonda: ["Rice", "Cotton", "Turmeric", "Mangoes", "Vegetables"],
+             Hyderabad: ["Vegetables", "Fruits", "Flowers", "Rice", "Pulses"],
+             Jagtial: ["Rice", "Maize", "Cotton", "Turmeric", "Chillies"],
+             Jangaon: ["Rice", "Cotton", "Maize", "Turmeric", "Mangoes"],
+             "Jayashankar Bhoopalpally": ["Rice", "Cotton", "Turmeric", "Maize", "Groundnut"],
+             "Jogulamba Gadwal": ["Rice", "Cotton", "Chillies", "Turmeric", "Mangoes"],
+             Kamareddy: ["Rice", "Cotton", "Turmeric", "Maize", "Pulses"],
+             Karimnagar: ["Rice", "Cotton", "Turmeric", "Maize", "Groundnut"],
+             Khammam: ["Rice", "Cotton", "Turmeric", "Chillies", "Pulses"],
+             "Komaram Bheem Asifabad": ["Rice", "Cotton", "Turmeric", "Maize", "Pulses"],
+             Mahabubabad: ["Rice", "Cotton", "Turmeric", "Maize", "Pulses"],
+             Mancherial: ["Rice", "Cotton", "Chillies", "Turmeric", "Maize"],
+             Medak: ["Rice", "Cotton", "Turmeric", "Maize", "Mangoes"],
+             "Medchal-Malkajgiri": ["Vegetables", "Fruits", "Flowers", "Rice", "Pulses"],
+             Mulug: ["Rice", "Cotton", "Turmeric", "Maize", "Groundnut"],
+             Nagarkurnool: ["Rice", "Cotton", "Turmeric", "Mangoes", "Groundnut"],
+             Nalgonda: ["Rice", "Cotton", "Chillies", "Turmeric", "Pulses"],
+             Narayanpet: ["Rice", "Cotton", "Turmeric", "Maize", "Groundnut"],
+             Nizamabad: ["Rice", "Maize", "Turmeric", "Sugarcane", "Pulses"],
+             Nirmal: ["Rice", "Cotton", "Turmeric", "Maize", "Pulses"],
+             Peddapalli: ["Rice", "Cotton", "Turmeric", "Maize", "Groundnut"],
+             "Rajanna Siricilla": ["Rice", "Cotton", "Turmeric", "Maize", "Groundnut"],
+             Rangareddy: ["Rice", "Cotton", "Vegetables", "Fruits", "Flowers"],
+             Sangareddy: ["Rice", "Cotton", "Vegetables", "Fruits", "Flowers"],
+             Siddipet: ["Rice", "Cotton", "Turmeric", "Maize", "Groundnut"],
+             Suryapet: ["Rice", "Cotton", "Turmeric", "Chillies", "Pulses"],
+             Vikarabad: ["Rice", "Cotton", "Vegetables", "Fruits", "Flowers"],
+             Wanaparthy: ["Rice", "Cotton", "Chillies", "Turmeric", "Pulses"],
+             Warangal: ["Rice", "Cotton", "Turmeric", "Maize", "Groundnut"],
+             Bagalkot: ["Sugarcane", "Cotton", "Maize", "Groundnut", "Sorghum"],
+             Ballari: ["Rice", "Groundnut", "Cotton", "Maize", "Sorghum"],
+             Belagavi: ["Sugarcane", "Maize", "Groundnut", "Tobacco", "Grapes"],
+             "Bengaluru(urban)": ["Vegetables", "Fruits", "Flowers", "Sericulture (Silk production)"],
+             "Bengaluru(rural)": ["Rice", "Vegetables", "Fruits", "Flowers", "Sericulture"],
+             Bidar: ["Jowar (Sorghum)", "Maize", "Pulses", "Groundnut", "Sunflower"],
+             Chamarajanagar: ["Sugarcane", "Paddy", "Coconut", "Banana", "Maize"],
+             Chikballapur: ["Vegetables", "Fruits", "Flowers", "Silk", "Coconut"],
+             Chikkamagaluru: ["Coffee", "Areca nut", "Pepper", "Cardamom", "Paddy"],
+             Chitradurga: ["Paddy", "Pulses", "Groundnut", "Millets", "Sunflower"],
+             "Dakshina Kannada": ["Coconut", "Areca nut", "Cashew", "Pepper", "Paddy"],
+             Davangere: ["Paddy", "Cotton", "Maize", "Groundnut", "Sorghum"],
+             Dharwad: ["Sugarcane", "Cotton", "Maize", "Groundnut", "Jowar"],
+             Gadag: ["Cotton", "Maize", "Jowar", "Groundnut", "Sunflower"],
+             Hassan: ["Coffee", "Areca nut", "Paddy", "Coconut", "Sugarcane"],
+             Haveri: ["Cotton", "Maize", "Jowar", "Groundnut", "Sunflower"],
+             "Kalaburagi(Gulbarga)": ["Jowar", "Maize", "Pulses", "Groundnut", "Sunflower"],
+             Kodagu: ["Coffee", "Spices (Pepper, Cardamom)", "Paddy", "Ginger", "Oranges"],
+             Kolar: ["Mulberry (for Silk production)", "Tomatoes", "Mangoes", "Groundnut", "Vegetables"],
+             Koppal: ["Jowar", "Maize", "Cotton", "Groundnut", "Sunflower"],
+             Mandhya: ["Sugarcane", "Paddy", "Coconut", "Maize", "Vegetables"],
+             Mysuru: ["Sugarcane", "Paddy", "Coconut", "Maize", "Vegetables"],
+             Raichur: ["Jowar", "Maize", "Cotton", "Groundnut", "Sunflower"],
+             Ramanagara: ["Silk (Sericulture)", "Vegetables", "Fruits", "Flowers", "Mulberry"],
+             Shivamogga: ["Areca nut", "Paddy", "Coconut", "Areca nut", "Spices (Pepper, Cardamom)"],
+             Tumakuru: ["Paddy", "Groundnut", "Coconut", "Maize", "Sugarcane"],
+             Udupi: ["Coconut", "Areca nut", "Paddy", "Vegetables", "Spices (Pepper, Cardamom)"],
+             "Uttara Kannada": ["Areca nut", "Coconut", "Paddy", "Cashew", "Spices (Pepper, Cardamom)"],
+             Vijayapura: ["Sugarcane", "Maize", "Groundnut", "Jowar", "Cotton"],
+             Yadgir: ["Jowar", "Maize", "Groundnut", "Cotton", "Pulses"],
+             Alappuzha: ["Paddy (rice)", "Coconut", "Banana", "Spices (pepper, cardamom)", "Vegetables"],
+             Ernakulam: ["Coconut", "Rubber", "Spices (pepper, cardamom)", "Pineapple", "Vegetables"],
+             Idukki: ["Tea", "Coffee", "Spices (pepper, cardamom, cinnamon)", "Vegetables", "Fruits"],
+             Kannur: ["Coconut", "Pepper", "Areca nut", "Cashew", "Paddy (rice)"],
+             Kasaragod: ["Coconut", "Areca nut", "Cashew", "Rubber", "Paddy (rice)"],
+             Kollam: ["Rubber", "Coconut", "Spices (pepper, cardamom)", "Banana", "Pineapple"],
+             Kottayam: ["Rubber", "Coconut", "Spices (pepper, cardamom)", "Banana", "Pineapple"],
+             Kozhikode: ["Coconut", "Banana", "Rubber", "Spices (pepper, cardamom)", "Paddy (rice)"],
+             Malappuram: ["Coconut", "Paddy (rice)", "Banana", "Rubber", "Spices (pepper, cardamom)"],
+             Palakkad: ["Coconut", "Paddy (rice)", "Banana", "Mango", "Vegetables"],
+             Pathanamthitta: ["Rubber", "Coconut", "Paddy (rice)", "Tapioca", "Vegetables"],
+             Thiruvananthapuram: ["Rubber", "Coconut", "Spices (pepper, cardamom)", "Paddy (rice)", "Banana"],
+             Thrissur: ["Coconut", "Paddy (rice)", "Banana", "Rubber", "Spices (pepper, cardamom)"],
+             Wayanad: ["Coffee", "Tea", "Spices (pepper, cardamom)", "Ginger", "Paddy (rice)"],
+             Ariyalur: ["Paddy (rice)", "Sugarcane", "Groundnut", "Maize", "Pulses"],
+             Chengalpattu: ["Rice", "Sugarcane", "Vegetables", "Fruits", "Flowers"],
+             Chennai: ["Vegetables", "Fruits", "Flowers", "Coconut", "Paddy (rice)"],
+             Coimbatore: ["Coconut", "Banana", "Sugarcane", "Turmeric", "Maize"],
+             Cuddalore: ["Rice", "Sugarcane", "Groundnut", "Pulses", "Coconut"],
+             Dharmapuri: ["Mango", "Tamarind", "Tomato", "Pomegranate", "Millets"],
+             Dindigul: ["Cotton", "Banana", "Groundnut", "Coconut", "Sugarcane"],
+             Erode: ["Turmeric", "Coconut", "Banana", "Sugarcane", "Tapioca"],
+             Kallakurichi: ["Paddy (rice)", "Sugarcane", "Groundnut", "Maize", "Pulses"],
+             Kanchipuram: ["Paddy (rice)", "Sugarcane", "Groundnut", "Vegetables", "Flowers"],
+             Kanyakumari: ["Coconut", "Rubber", "Spices (pepper, cardamom)", "Banana", "Cashew"],
+             Karur: ["Paddy (rice)", "Sugarcane", "Groundnut", "Maize", "Pulses"],
+             Krishnagiri: ["Mango", "Tomato", "Tamarind", "Maize", "Millets"],
+             Madurai: ["Paddy (rice)", "Sugarcane", "Groundnut", "Cotton", "Vegetables"],
+             Nagapattinam: ["Paddy (rice)", "Sugarcane", "Groundnut", "Coconut", "Pulses"],
+             Namakkal: ["Poultry", "Egg production", "Maize", "Sugarcane", "Turmeric"],
+             Nilgiris: ["Tea", "Coffee", "Vegetables", "Fruits", "Spices (pepper, cardamom)"],
+             Perambalur: ["Paddy (rice)", "Sugarcane", "Groundnut", "Maize", "Pulses"],
+             Pudukkottai: ["Paddy (rice)", "Sugarcane", "Groundnut", "Coconut", "Pulses"],
+             Ramanathapuram: ["Paddy (rice)", "Sugarcane", "Groundnut", "Coconut", "Pulses"],
+             Ranipet: ["Sugarcane", "Groundnut", "Maize", "Vegetables", "Flowers"],
+             Salem: ["Mango", "Turmeric", "Tapioca", "Groundnut", "Sugarcane"],
+             Sivaganga: ["Paddy (rice)", "Sugarcane", "Groundnut", "Cotton", "Vegetables"],
+             Tenkasi: ["Paddy (rice)", "Sugarcane", "Groundnut", "Coconut", "Banana"],
+             Thanjavur: ["Paddy (rice)", "Sugarcane", "Groundnut", "Coconut", "Banana"],
+             Theni: ["Mango", "Banana", "Coconut", "Spices (cardamom, pepper)", "Vegetables"],
+             Thoothukudi: ["Coconut", "Groundnut", "Banana", "Sugarcane", "Cashew"],
+             Tiruchirapalli: ["Paddy (rice)", "Sugarcane", "Groundnut", "Coconut", "Banana"],
+             Tirunelveli: ["Banana", "Coconut", "Rubber", "Sugarcane", "Groundnut"],
+             Tirupathur: ["Paddy (rice)", "Sugarcane", "Groundnut", "Maize", "Pulses"],
+             Tiruppur: ["Cotton", "Sugarcane", "Maize", "Groundnut", "Coconut"],
+             Tiruvallur: ["Paddy (rice)", "Sugarcane", "Groundnut", "Coconut", "Banana"],
+             Tiruvannamalai: ["Paddy (rice)", "Sugarcane", "Groundnut", "Maize", "Pulses"],
+             Tiruvarur: ["Paddy (rice)", "Sugarcane", "Groundnut", "Coconut", "Banana"],
+             Vellore: ["Paddy (rice)", "Sugarcane", "Groundnut", "Maize", "Pulses"],
+             Viluppuram: ["Paddy (rice)", "Sugarcane", "Groundnut", "Coconut", "Banana"],
+             Virudhunagar: ["Paddy (rice)", "Sugarcane", "Groundnut", "Cotton", "Vegetables"],
+             Angul: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Sugarcane"],
+             Balangir: ["Rice", "Maize", "Pulses", "Oilseeds", "Vegetables"],
+             Balasore: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Fruits"],
+             Bargarh: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Sugarcane"],
+             Bhadrak: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Sugarcane"],
+             Boudh: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Maize"],
+             Cuttack: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Sugarcane"],
+             Deogarh: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Sugarcane"],
+             Dhenkanal: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Sugarcane"],
+             Gajapati: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Turmeric"],
+             Ganjam: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Sugarcane"],
+             Jagatsinghapur: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Sugarcane"],
+             Jajpur: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Sugarcane"],
+             Jharsuguda: ["Rice", "Maize", "Pulses", "Oilseeds", "Vegetables"],
+             Kalahandi: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Sugarcane"],
+             Kandhamal: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Turmeric"],
+             Kendujhar: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Sugarcane"],
+             Khordha: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Sugarcane"],
+             Koraput: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Turmeric"],
+             Malkangiri: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Turmeric"],
+             Mayurbhanj: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Maize"],
+             Nabarangpur: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Turmeric"],
+             Nayagarh: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Sugarcane"],
+             Nuapada: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Sugarcane"],
+             Puri: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Sugarcane"],
+             Rayagada: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Turmeric"],
+             Sambalpur: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Sugarcane"],
+             Sonepur: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Sugarcane"],
+             Sundargarh: ["Rice", "Oilseeds", "Pulses", "Vegetables", "Maize", "Fruits"],
+             Alipurduar: ["Tea", "Rice", "Oranges", "Betel Leaf", "Cardamom"],
+             Bankura: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Jute"],
+             Birbhum: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Maize"],
+             "Cooch Behar": ["Rice", "Jute", "Tea", "Sugarcane", "Potatoes"],
+             "Dakshin Dinajpur": ["Rice", "Jute", "Wheat", "Pulses", "Maize"],
+             Darjeeling: ["Tea", "Maize", "Cardamom", "Oranges", "Ginger"],
+             Hooghly: ["Rice", "Jute", "Vegetables", "Sugarcane", "Potatoes"],
+             Howrah: ["Rice", "Jute", "Vegetables", "Betel Leaf", "Fruits"],
+             Jalpaiguri: ["Tea", "Rice", "Maize", "Vegetables", "Cardamom"],
+             Jhargram: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Maize"],
+             Kalimpong: ["Cardamom", "Ginger", "Oranges", "Maize", "Vegetables"],
+             Kolkata: ["Vegetables", "Fruits", "Flowers"],
+             Malda: ["Rice", "Jute", "Maize", "Wheat", "Pulses"],
+             Murshidabad: ["Rice", "Jute", "Sugarcane", "Wheat", "Pulses"],
+             Nadia: ["Rice", "Jute", "Vegetables", "Sugarcane", "Pulses"],
+             "North 24 Parganas": ["Rice", "Jute", "Vegetables", "Sugarcane", "Pulses"],
+             "Paschim Medinipur": ["Rice", "Jute", "Pulses", "Oilseeds", "Vegetables"],
+             "Paschim Bardhaman": ["Rice", "Pulses", "Oilseeds", "Vegetables", "Jute"],
+             "Purba Bardhaman": ["Rice", "Pulses", "Oilseeds", "Vegetables", "Jute"],
+             "Purba Medinipur": ["Rice", "Jute", "Pulses", "Oilseeds", "Vegetables"],
+             Purulia: ["Rice", "Pulses", "Oilseeds", "Vegetables", "Maize"],
+             "South 24 Parganas": ["Rice", "Jute", "Vegetables", "Sugarcane", "Pulses"],
+             "Uttar Dinajpur": ["Rice", "Jute", "Maize", "Wheat", "Pulses"],
+             Araria: ["Rice", "Maize", "Wheat", "Pulses", "Sugarcane"],
+             Arwal: ["Rice", "Wheat", "Pulses", "Maize", "Vegetables"],
+             Aurangabad: ["Rice", "Wheat", "Pulses", "Maize", "Oilseeds"],
+             Banka: ["Rice", "Maize", "Wheat", "Pulses", "Oilseeds"],
+             Begusarai: ["Rice", "Wheat", "Pulses", "Maize", "Sugarcane"],
+             Bhagalpur: ["Rice", "Wheat", "Maize", "Pulses", "Oilseeds"],
+             Bhojpur: ["Rice", "Wheat", "Pulses", "Maize", "Sugarcane"],
+             Buxar: ["Rice", "Wheat", "Pulses", "Maize", "Oilseeds"],
+             Darbhanga: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             "East Champaran": ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Gaya: ["Rice", "Wheat", "Maize", "Pulses", "Oilseeds"],
+             Gopalganj: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Jamui: ["Rice", "Wheat", "Maize", "Pulses", "Oilseeds"],
+             Jehanabad: ["Rice", "Wheat", "Maize", "Pulses", "Oilseeds"],
+             Kaimur: ["Rice", "Wheat", "Maize", "Pulses", "Oilseeds"],
+             Katihar: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Khagaria: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Kishanganj: ["Rice", "Maize", "Wheat", "Pulses", "Vegetables"],
+             Lakhisarai: ["Rice", "Wheat", "Maize", "Pulses", "Oilseeds"],
+             Madhepura: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Madhubani: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Munger: ["Rice", "Wheat", "Maize", "Pulses", "Oilseeds"],
+             Muzaffarpur: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Nalanda: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Nawada: ["Rice", "Wheat", "Maize", "Pulses", "Oilseeds"],
+             Patna: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Purnia: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Rohtas: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Saharsa: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Samastipur: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Saran: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Sheikhpura: ["Rice", "Wheat", "Maize", "Pulses", "Oilseeds"],
+             Sheohar: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Sitamarhi: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Siwan: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Supaul: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Vaishali: ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             "West Champaran": ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"],
+             Ahmednagar: ["Grapes", "Sugarcane", "Onions", "Tomatoes", "Wheat"],
+             Akola: ["Cotton", "soybeans", "pulses", "sorghum", "turmeric"],
+             Amravati: ["Cotton", "soybeans", "pulses", "oranges", "turmeric"],
+             Aurangabad: ["Grapes", "cotton", "soybeans", "pulses", "sugarcane"],
+             Beed: ["Cotton", "soybeans", "pulses", "sugarcane", "maize"],
+             Bhandara: ["Rice", "pulses", "sugarcane", "vegetables", "turmeric"],
+             Buldhana: ["Cotton", "soybeans", "pulses", "oranges", "sugarcane"],
+             Chandrapur: ["Rice", "pulses", "cotton", "soybeans", "vegetables"],
+             Dhule: ["Sugarcane", "bananas", "wheat", "sorghum", "soybeans"],
+             Gadchiroli: ["Rice", "pulses", "oilseeds", "maize", "vegetables"],
+             Gondia: ["Rice", "pulses", "soybeans", "sugarcane", "maize"],
+             Hingoli: ["Soybeans", "cotton", "pulses", "sorghum", "sugarcane"],
+             Jalgaon: ["Bananas", "cotton", "soybeans", "maize", "wheat"],
+             Jalna: ["Soybeans", "cotton", "pulses", "turmeric", "wheat"],
+             Kolhapur: ["Sugarcane", "jowar", "turmeric", "groundnut", "maize"],
+             Latur: ["Sugarcane", "pulses", "soybeans", "maize", "cotton"],
+             "Mumbai City": ["Herbs", "Flowers", "Vegetables", "Spices"],
+             Nagpur: ["Oranges", "cotton", "pulses", "soybeans", "sugarcane"],
+             Nanded: ["Soybeans", "cotton", "pulses", "sugarcane", "turmeric"],
+             Nandurbar: ["Cotton", "soybeans", "maize", "wheat", "sorghum"],
+             Nashik: ["Grapes", "onions", "tomatoes", "pomegranates", "wheat"],
+             Osmanabad: ["Soybeans", "cotton", "pulses", "maize", "turmeric"],
+             Palghar: ["Rice", "sugarcane", "vegetables", "fruits", "cashew nuts"],
+             Parbhani: ["Soybeans", "cotton", "pulses", "turmeric", "sugarcane"],
+             Pune: ["Grapes", "sugarcane", "onions", "tomatoes", "wheat"],
+             Raigad: ["Rice", "coconut", "cashew nuts", "mangoes", "vegetables"],
+             Ratnagiri: ["Mangoes", "cashew nuts", "coconut", "rice", "betel nuts"],
+             Sangli: ["Grapes", "sugarcane", "turmeric", "jowar", "groundnut"],
+             Satara: ["Sugarcane", "grapes", "jowar", "groundnut", "turmeric"],
+             Sindhudurg: ["Coconut", "mangoes", "cashew nuts", "rice", "betel nuts"],
+             Solapur: ["Sugarcane", "jowar", "soybeans", "turmeric", "groundnut"],
+             Thane: ["Rice", "vegetables", "fruits", "flowers", "spices"],
+             Wardha: ["Cotton", "soybeans", "pulses", "oranges", "wheat"],
+             Washim: ["Cotton", "soybeans", "maize", "pulses", "turmeric"],
+             Yavatmal: ["Cotton", "soybeans", "pulses", "turmeric", "maize"],
+             Ahmedabad: ["Cotton", "groundnut", "vegetables", "wheat", "pulses"],
+             Surat: ["Textiles", "vegetables", "fruits", "diamonds"],
+             Vadodara: ["Cotton", "pulses", "maize", "rice"],
+             Rajkot: ["Cotton", "groundnut", "peanuts", "oilseeds", "pulses"],
+             Bhavnagar: ["Cotton", "groundnut", "wheat", "bajra", "vegetables"],
+             Junagadh: ["Mangoes", "cotton", "groundnut", "wheat", "pulses"],
+             Gandhinagar: ["Vegetables", "fruits", "spices", "pulses", "cereals"],
+             Jamnagar: ["Oil refineries (major industry)", "groundnut", "cotton", "sesame", "cereals"],
+             Bharuch: ["Chemicals (major industry)", "rice", "maize", "pulses", "vegetables"],
+             Kutch: ["Bajra", "pulses", "cotton", "castor", "sesame"],
+             Jaipur: ["Wheat", "barley", "pulses", "mustard", "fruits"],
+             Jodhpur: ["Bajra", "wheat", "pulses", "mustard", "sesame"],
+             Kota: ["Barley", "pulses", "wheat", "oilseeds", "maize"],
+             Bikaner: ["Bajra", "pulses", "wheat", "mustard", "cotton"],
+             Ajmer: ["Wheat", "barley", "pulses", "mustard", "oilseeds"],
+             Udaipur: ["Maize", "pulses", "wheat", "oilseeds", "barley"],
+             Alwar: ["Maize", "millets", "mustard", "wheat", "barley"],
+             Sikar: ["Wheat", "barley", "pulses", "mustard", "millets"],
+             Banswara: ["Maize", "millets", "pulses", "oilseeds", "wheat"],
+             Dungarpur: ["Maize", "millets", "pulses", "oilseeds", "wheat"],
+             Lucknow: ["Sugarcane", "wheat", "rice", "barley", "pulses"],
+             Kanpur: ["Leather", "textiles", "sugarcane", "wheat", "rice"],
+             Ghaziabad: ["Wheat", "sugarcane", "rice", "maize"],
+             Varanasi: ["Silk", "rice", "wheat", "pulses", "sugarcane"],
+             Allahabad: ["Wheat", "rice", "sugarcane", "barley", "pulses"],
+             Agra: ["wheat", "barley", "oilseeds"],
+             Meerut: ["wheat", "sugarcane", "rice", "barley"],
+             Aligarh: ["wheat", "barley", "oilseeds"],
+             Moradabad: ["wheat", "sugarcane", "pulses", "sugar"],
+             Bareilly: ["wheat", "sugarcane", "pulses", "textiles", "sugar"],
+             Bhopal: ["Wheat", "soybeans", "pulses", "maize", "sugarcane"],
+             Jabalpur: ["Soybeans", "wheat", "maize", "pulses", "cotton"],
+             Gwalior: ["Rice", "pulses", "wheat", "soybeans", "sugarcane"],
+             Ujjain: ["Wheat", "pulses", "oilseeds", "soybeans", "sugarcane"],
+             Sagar: ["Wheat", "pulses", "soybeans", "sugarcane", "maize"],
+             Dewas: ["Wheat", "pulses", "soybeans", "maize", "rice"],
+             Satna: ["Soybeans", "wheat", "maize", "pulses", "cotton"],
+             Ratlam: ["Rice", "wheat", "maize", "pulses", "soybeans"],
+             Rewa: ["Wheat", "pulses", "soybeans", "maize", "gram"],
+             Raipur: ["Rice", "pulses", "oilseeds", "wheat", "sugarcane"],
+             Bilaspur: ["Rice", "maize", "pulses", "oilseeds", "sugarcane"],
+             Durg: ["Rice", "pulses", "oilseeds", "wheat", "vegetables"],
+             Bastar: ["Rice", "maize", "pulses", "oilseeds", "soybeans"],
+             Raigarh: ["Rice", "pulses", "oilseeds", "wheat", "sugarcane"],
+             Ranchi: ["Rice", "maize", "pulses", "oilseeds", "vegetables"],
+             Dhanbad: ["Rice", "maize", "pulses", "oilseeds", "vegetables"],
+             Jamshedpur: ["Rice", "maize", "pulses", "oilseeds", "vegetables"],
+             Bokaro: ["Rice", "maize", "pulses", "oilseeds", "wheat"],
+             Hazaribagh: ["Rice", "maize", "pulses", "oilseeds", "vegetables"],
+             Guwahati: ["Tea", "rice", "jute", "pulses", "sugarcane"],
+             Dibrugarh: ["Tea", "rice", "jute", "pulses", "oilseeds"],
+             Jorhat: ["Tea", "rice", "jute", "pulses", "oilseeds"],
+             Silchar: ["Rice", "tea", "jute", "pulses", "oilseeds"],
+             Nagaon: ["Rice", "tea", "jute", "pulses", "oilseeds"],
+             Ludhiana: ["Wheat", "rice", "maize", "sugarcane", "vegetables"],
+             Amritsar: ["Wheat", "rice", "maize", "pulses", "sugarcane"],
+             Jalandhar: ["Wheat", "rice", "maize", "pulses", "sugarcane"],
+             Patiala: ["Wheat", "rice", "maize", "sugarcane", "vegetables"],
+             Bathinda: ["Wheat", "rice", "cotton", "maize", "sugarcane"],
+             Faridabad: ["Wheat", "rice", "maize", "vegetables", "fruits"],
+             Gurgaon: ["Wheat", "rice", "maize", "vegetables", "fruits"],
+             Rohtak: ["Wheat", "rice", "maize", "vegetables", "fruits"],
+             Hisar: ["Wheat", "rice", "maize", "sugarcane", "vegetables"],
+             Karnal: ["Wheat", "rice", "cotton", "sugarcane", "bajra"],
+             "East Khasi Hills": ["Rice", "Maize", "Oranges", "Pineapples", "Betel nuts"],
+             "West Garo Hills": ["Rice", "Maize", "Pineapples", "Bananas", "Ginger"],
+             "West Khasi Hills": ["Rice", "Maize", "Pineapples", "Bananas", "Cardamom"],
+             "East Garo Hills": ["Rice", "Maize", "Oranges", "Pineapples", "Turmeric"],
+             "Ri-Bhoi": ["Rice", "Maize", "Pineapples", "Betel nuts", "Ginger"],
+             Aizawl: ["Rice", "Maize", "Cabbage", "Cauliflower", "Beans", "Oranges", "Pineapples", "Banana", "Ginger", "Turmeric"],
+             Lunglei: ["Rice", "Maize", "Tomatoes", "Potatoes", "Leafy greens", "Lentils", "Peas", "Oranges", "Bananas"],
+             Champhai: ["Rice", "Maize", "Cabbage", "Beans", "Peas", "Blackgram", "Greengram", "Oranges", "Pineapples"],
+             Saiha: ["Rice", "Maize", "Pigeon peas", "Black gram", "Potatoes", "Leafy greens", "Oranges", "Pineapples"],
+             Serchhip: ["Rice", "Maize", "Beans", "Carrots", "Radishes", "Bananas", "Oranges", "Pineapples", "Turmeric", "Ginger"],
+             Dimapur: ["Rice", "Maize", "Potatoes", "Tomatoes", "Beans", "Oranges", "Banana", "Lentils", "Peas"],
+             Kohima: ["Rice", "Maize", "Potatoes", "Tomatoes", "Beans", "Oranges", "Banana", "Lentils", "Peas", "Cabbage"],
+             Mokokchung: ["Rice", "Maize", "Potatoes", "Beans", "Leafy greens", "Oranges", "Pineapples", "Peas", "Lentils"],
+             Tuensang: ["Rice", "Maize", "Potatoes", "Beans", "Leafy greens", "Oranges", "Pineapples", "Peas", "Lentils"],
+             Wokha: ["Rice", "Maize", "Tomatoes", "Potatoes", "Leafy greens", "Lentils", "Peas", "Oranges", "Bananas"],
+             "West Tripura": ["Rice", "Jute", "Tea", "Pulses", "Rubber"],
+             "South Tripura": ["Rice", "Sugarcane", "Jute", "Oilseeds", "Vegetables"],
+             Dhalai: ["Rice", "Maize", "Pulses", "Ginger", "Turmeric"],
+             "North Tripura": ["Rice", "Sugarcane", "Jute", "Oilseeds", "Fruits"],
+             Sepahijala: ["Rice", "Rubber", "Fruits", "Vegetables", "Spices"],
+             Khowai: ["Rice", "Jute", "Tea", "Rubber", "Vegetables"],
+             Gomati: ["Rice", "Jute", "Sugarcane", "Oilseeds", "Spices"],
+             Unakoti: ["Rice", "Sugarcane", "Jute", "Oilseeds", "Pulses"],
+             Sipahijala: ["Rice", "Rubber", "Fruits", "Vegetables", "Spices"],
+             Belonia: ["Rice", "Jute", "Sugarcane", "Oilseeds", "Spices"],
+             "North Goa": ["Rice", "Coconut", "Cashew nuts", "Mangoes", "Pineapples"],
+             "South Goa": ["Rice", "Coconut", "Cashew nuts", "Mangoes", "Bananas"],
+             Raipur: ["Rice", "Maize", "Soybeans", "Pigeon peas", "Mustard"],
+             Bilaspur: ["Rice", "Maize", "Soybeans", "Wheat", "Mustard"],
+             Durg: ["Rice", "Maize", "Wheat", "Gram", "Groundnuts"],
+             Bastar: ["Rice", "Maize", "Soybeans", "Linseed", "Sesame"],
+             Surguja: ["Rice", "Maize", "Wheat", "Gram", "Oilseeds"],
+             Shimla: ["Apples", "Potatoes", "Maize", "Wheat", "Barley"],
+             Kangra: ["Tea", "Rice", "Maize", "Wheat", "Barley"],
+             Mandi: ["Apples", "Potatoes", "Maize", "Wheat", "Barley"],
+             Solan: ["Apples", "Potatoes", "Maize", "Wheat", "Barley"],
+             Una: ["Apples", "Potatoes", "Maize", "Wheat", "Barley"],
+             "East Sikkim": ["Cardamom", "Ginger", "Buckwheat", "Potatoes", "Oranges"],
+             "West Sikkim": ["Cardamom", "Ginger", "Buckwheat", "Potatoes", "Oranges"],
+             "North Sikkim": ["Cardamom", "Ginger", "Buckwheat", "Potatoes", "Barley"],
+             "South Sikkim": ["Cardamom", "Ginger", "Buckwheat", "Potatoes", "Oranges"],
+             Pakyong: ["Cardamom", "Ginger", "Buckwheat", "Potatoes", "Oranges"],
+             Tawang: ["Rice", "Maize", "Wheat", "Barley", "Potatoes"],
+             "West Kameng": ["Rice", "Maize", "Millet", "Wheat", "Potatoes"],
+             "East Kameng": ["Rice", "Maize", "Millet", "Wheat", "Potatoes"],
+             "Papum Pare": ["Rice", "Maize", "Millet", "Wheat", "Potatoes"],
+             "Lower Subansiri": ["Rice", "Maize", "Millet", "Wheat", "Potatoes"],
+             "Imphal West": ["Rice", "Maize", "Mustard", "Lentils", "Sugarcane"],
+             "Imphal East": ["Rice", "Maize", "Soybeans", "Peas", "Potatoes"],
+             Thoubal: ["Rice", "Maize", "Peanuts", "Sesame", "Sugarcane"],
+             Bishnupur: ["Rice", "Maize", "Chickpeas", "Oilseeds", "Vegetables"],
+             Churachandpur: ["Rice", "Maize", "Sorghum", "Millet", "Pulses"],
+         };
+         function showStateSuggestions() {
+             const stateInput = document.getElementById("stateInput");
+             const suggestionList = document.getElementById("suggestion-list1");
+             const inputValue = stateInput.value.toLowerCase();
+         
+             const filteredStates = states.filter((state) => state.toLowerCase().includes(inputValue));
+         
+             updateSuggestions(suggestionList, filteredStates, stateInput);
+         }
+         
+         function showDistrictSuggestions() {
+             const stateInput = document.getElementById("stateInput");
+             const districtInput = document.getElementById("districtInput");
+             const stateValue = stateInput.value;
+             const suggestionList = document.getElementById("suggestion-list2");
+             const inputValue = districtInput.value.toLowerCase();
+         
+             const filteredDistricts = (districts[stateValue] || []).filter((district) => district.toLowerCase().includes(inputValue));
+         
+             updateSuggestions(suggestionList, filteredDistricts, districtInput);
+         }
+         
+         function updateSuggestions(suggestionList, suggestions, inputElement) {
+             suggestionList.innerHTML = "";
+             suggestions.forEach((option) => {
+                 const li = document.createElement("li");
+                 li.textContent = option;
+                 li.onclick = function () {
+                     inputElement.value = option;
+                     suggestionList.style.display = "none";
+                 };
+                 suggestionList.appendChild(li);
+             });
+         
+             if (suggestions.length > 0) {
+                 suggestionList.style.display = "block";
+             } else {
+                 suggestionList.style.display = "none";
+             }
+         }
+		 function resetDistrictField() {
+		  // Clear the value of the district input field
+		  document.getElementById("districtInput").value = "";
+		  // Clear any existing suggestion list for districts
+		  document.getElementById("suggestion-list2").innerHTML = "";
+		  // Hide the "requiredMessage" label
+		  document.getElementById("requiredMessage").style.display = "none";
+		  // Clear any existing output 
+		  document.getElementById("output").innerHTML = "";
+		  
+		}
+		function resetAllField() {
+		  // Clear the value of the district input field
+		  document.getElementById("districtInput").value = "";
+		  // Clear any existing suggestion list for districts
+		  document.getElementById("suggestion-list2").innerHTML = "";
+		  // Hide the "requiredMessage" label
+		  document.getElementById("requiredMessage").style.display = "none";
+		  // Clear any existing output 
+		  document.getElementById("output").innerHTML = "";
+		  // Clear the value of the state Input field
+		  document.getElementById("stateInput").value = "";
+		  
+		}
+		
+         function resetOutputField() {
+		  // Hide the "requiredMessage" label
+		  document.getElementById("requiredMessage").style.display = "none";
+		  // Clear any existing output 
+		  document.getElementById("output").innerHTML = "";
+		  
+		}
+         
+		 function submitForm() {
+			const stateInputValue = document.getElementById('stateInput').value;
+			const districtInputValue = document.getElementById('districtInput').value;
+
+			// Basic validation
+			if (stateInputValue === "" || districtInputValue === "") {
+				document.getElementById("requiredMessage").style.display = "block";
+			} else if (!states.includes(stateInputValue)) {
+				// Check if the entered state is present in the list of states
+				alert("Please select a valid state.");
+				resetAllField();
+				}
+			else if (!districts[stateInputValue].includes(districtInputValue)){
+				alert("Please select a valid district for the chosen state.");
+				resetDistrictField(); // Resetting only the district field
+			}
+			else {
+				// Proceed with form submission
+				document.getElementById("requiredMessage").style.display = "none";
+
+				// Your form submission logic here
+				const outputElement = document.getElementById("output");
+
+				// Assuming you have an object named 'crops' with district-wise crop information
+				const selectedCrops = crops[districtInputValue] || [];
+
+				// Displaying the selected state, district, and crops
+				outputElement.innerHTML = `<p>State: ${stateInputValue}</p><p>District: ${districtInputValue}</p><p>Crops: ${selectedCrops.join(", ")}</p>`;
+			}
+		}
+		
+      </script>
+   </body>
+</html>

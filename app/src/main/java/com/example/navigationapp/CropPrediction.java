@@ -9,16 +9,30 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
-public class CheckstatusActivity extends AppCompatActivity {
+public class CropPrediction extends AppCompatActivity {
     DrawerLayout drawerLayout;
-
+// DRAWER DECLARATION
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_checkstatus);
+        setContentView(R.layout.activity_cropprediction);
+
         drawerLayout =findViewById(R.id.drawer_layout);
+        WebView webview2=findViewById(R.id.webcrop);
+        WebSettings webSettings = webview2.getSettings();
+        webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        webSettings.setJavaScriptEnabled(true);
+        webview2.loadUrl("http://16.171.70.35:8080/");
+
+
     }
+
+
+
+
     // MENU OPENS
     public void ClickMenu(View view) {
 
@@ -30,25 +44,47 @@ public class CheckstatusActivity extends AppCompatActivity {
         closeDrawer(drawerLayout);
     }
 
+//
+//  //  public void Clickhome(View view) {
+//        recreate();
+//    }
+
 
     public void Clickhome(View view) {
-        recreate();
+
+        redirectActivity(this, MainActivity.class);
     }
     public void ClickSurveyform(View view){
-        redirectActivity(this, SurveyformActivity.class);
+        redirectActivity(this, CropPrediction.class);
 
     }
     // check status opens
     public void ClickCheckstatus(View view){
-        redirectActivity(this, CheckstatusActivity.class);
+        redirectActivity(this, PlantDisease.class);
 
     }
     //complaintbox opens
     public void ClickComplaintbox(View view){
-        redirectActivity(this, ComplaintboxActivity.class);
+        redirectActivity(this, FertilizerRecommendation.class);
+
+    }
+    //Crop yield
+    public void ClickCropYield(View view){
+        redirectActivity(this, CropYield.class);
+
+    }
+
+    public void ClickDemand(View view){
+        redirectActivity(this, Demand.class);
+
+    }
+
+    public void ClickLocationBased(View view){
+        redirectActivity(this, LocationBased.class);
 
     }
     //feedback opens
+
     public void Clickfeedback(View view){
         redirectActivity(this, FeedbackActivity.class);
 
@@ -67,4 +103,3 @@ public class CheckstatusActivity extends AppCompatActivity {
     ////
 
 }
-

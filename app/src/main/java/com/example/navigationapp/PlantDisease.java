@@ -10,16 +10,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.os.Bundle;
 import android.view.View;
 
-public class Registration extends AppCompatActivity {
+public class PlantDisease extends AppCompatActivity {
     DrawerLayout drawerLayout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
+        setContentView(R.layout.activity_plantdisease);
         drawerLayout =findViewById(R.id.drawer_layout);
-
     }
     // MENU OPENS
     public void ClickMenu(View view) {
@@ -34,22 +32,39 @@ public class Registration extends AppCompatActivity {
 
 
     public void Clickhome(View view) {
-        recreate();
+
+        redirectActivity(this, MainActivity.class);
     }
     public void ClickSurveyform(View view){
-        redirectActivity(this, SurveyformActivity.class);
+        redirectActivity(this, CropPrediction.class);
 
     }
     // check status opens
     public void ClickCheckstatus(View view){
-        redirectActivity(this, CheckstatusActivity.class);
+        redirectActivity(this, PlantDisease.class);
 
     }
     //complaintbox opens
     public void ClickComplaintbox(View view){
-        redirectActivity(this, ComplaintboxActivity.class);
+        redirectActivity(this, FertilizerRecommendation.class);
 
     }
+
+    public void ClickDemand(View view){
+        redirectActivity(this, Demand.class);
+
+    }
+
+    //Crop yield
+    public void ClickCropYield(View view){
+        redirectActivity(this, CropYield.class);
+
+    }
+    public void ClickLocationBased(View view){
+        redirectActivity(this, LocationBased.class);
+
+    }
+
     //feedback opens
     public void Clickfeedback(View view){
         redirectActivity(this, FeedbackActivity.class);
@@ -67,4 +82,6 @@ public class Registration extends AppCompatActivity {
         closeDrawer(drawerLayout);
     }
     ////
+
 }
+

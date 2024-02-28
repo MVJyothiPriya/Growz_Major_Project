@@ -9,15 +9,23 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
-public class ComplaintboxActivity extends AppCompatActivity {
+public class CropYield extends AppCompatActivity {
     DrawerLayout drawerLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_complaintbox);
+        setContentView(R.layout.activity_cropyield);
         drawerLayout =findViewById(R.id.drawer_layout);
+        WebView webview=findViewById(R.id.webyield);
+        WebSettings webSettings = webview.getSettings();
+        webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        webSettings.setJavaScriptEnabled(true);
+        webview.loadUrl("http://16.171.70.35:8080/yield");
 
     }
     // MENU OPENS
@@ -33,22 +41,38 @@ public class ComplaintboxActivity extends AppCompatActivity {
 
 
     public void Clickhome(View view) {
-        recreate();
-    }
-    public void ClickSurveyform(View view){
-        redirectActivity(this, SurveyformActivity.class);
+
+        redirectActivity(this, MainActivity.class);
+    }    public void ClickSurveyform(View view){
+        redirectActivity(this, CropPrediction.class);
 
     }
     // check status opens
     public void ClickCheckstatus(View view){
-        redirectActivity(this, CheckstatusActivity.class);
+        redirectActivity(this, PlantDisease.class);
 
     }
     //complaintbox opens
     public void ClickComplaintbox(View view){
-        redirectActivity(this, ComplaintboxActivity.class);
+        redirectActivity(this, FertilizerRecommendation.class);
 
     }
+
+    //Crop yield
+    public void ClickCropYield(View view){
+        redirectActivity(this, CropYield.class);
+
+    }
+    public void ClickLocationBased(View view){
+        redirectActivity(this, LocationBased.class);
+
+    }
+    public void ClickDemand(View view){
+        redirectActivity(this, Demand.class);
+
+    }
+
+
     //feedback opens
     public void Clickfeedback(View view){
         redirectActivity(this, FeedbackActivity.class);

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="10dp"
+    tools:context=".Notification">
+
+    <EditText
+        android:id="@+id/titleId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Title"
+        android:minHeight="48dp"
+        android:text="" />
+
+    <EditText
+        android:id="@+id/messageId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="message"
+        android:minHeight="48dp"
+        android:text="" />
+
+    <Button
+        android:id="@+id/alldeviceId"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textAllCaps="false"
+        android:text="Sent all device "/>
+
+
+</LinearLayout>

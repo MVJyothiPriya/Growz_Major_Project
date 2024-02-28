@@ -36,17 +36,17 @@ public class Userlogin extends AppCompatActivity {
         recreate();
     }
     public void ClickSurveyform(View view){
-        redirectActivity(this, SurveyformActivity.class);
+        redirectActivity(this, CropPrediction.class);
 
     }
     // check status opens
     public void ClickCheckstatus(View view){
-        redirectActivity(this, CheckstatusActivity.class);
+        redirectActivity(this, PlantDisease.class);
 
     }
     //complaintbox opens
     public void ClickComplaintbox(View view){
-        redirectActivity(this, ComplaintboxActivity.class);
+        redirectActivity(this, FertilizerRecommendation.class);
 
     }
     //feedback opens
