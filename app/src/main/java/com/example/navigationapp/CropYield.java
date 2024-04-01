@@ -7,6 +7,7 @@ import static com.example.navigationapp.MainActivity.redirectActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -20,13 +21,15 @@ public class CropYield extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cropyield);
+        Resources res = getResources();
+        String variable1 = res.getString(R.string.yieldurl);
+
         drawerLayout =findViewById(R.id.drawer_layout);
         WebView webview=findViewById(R.id.webyield);
         WebSettings webSettings = webview.getSettings();
         webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         webSettings.setJavaScriptEnabled(true);
-        webview.loadUrl("http://16.171.70.35:8080/yield");
-
+        webview.loadUrl(variable1);
     }
     // MENU OPENS
     public void ClickMenu(View view) {
@@ -88,6 +91,10 @@ public class CropYield extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         closeDrawer(drawerLayout);
+    }
+    public void ClickSettings(View view){
+        redirectActivity(this, Settings.class);
+
     }
     ////
 }

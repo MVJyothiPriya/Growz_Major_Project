@@ -29,8 +29,9 @@
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
-                android:layout_height="580dp"
-                app:srcCompat="@drawable/village" />
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/img_1" />
 
         </LinearLayout>
 
@@ -59,9 +60,10 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:clickable="true"
-            android:onClick="openContactUs">
+            android:minHeight="48dp"
+            android:onClick="openContactUs"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -81,10 +83,11 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginStart="16dp"
             android:clickable="true"
+            android:minHeight="48dp"
             android:onClick="openAboutUs"
-            android:layout_marginStart="16dp">
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"

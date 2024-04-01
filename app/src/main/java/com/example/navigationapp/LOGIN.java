@@ -13,12 +13,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.navigationapp.ForgotPasswordActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
 public class LOGIN extends AppCompatActivity {
 
     private EditText aadharNumberEditText;
@@ -28,8 +28,8 @@ public class LOGIN extends AppCompatActivity {
     private TextView createAccountText;
     private ProgressBar progressBar;
     private FirebaseAuth firebaseAuth;
-    @SuppressLint("MissingInflatedId")
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +68,7 @@ public class LOGIN extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -77,6 +78,21 @@ public class LOGIN extends AppCompatActivity {
             // User is already signed in, redirect to the home screen or another activity
             // For now, let's display a toast message to indicate the user is already logged in
             Toast.makeText(LOGIN.this, "Already logged in as " + currentUser.getEmail(), Toast.LENGTH_SHORT).show();
+            redirectToHome(currentUser);
+        }
+    }
+
+    private void redirectToHome(FirebaseUser user) {
+        // Add your conditions to determine which activity to redirect to based on the user's data
+        // For example:
+        if (user.getUid().equals("1234567890")) {
+            // Redirect to AyzActivity
+            startActivity(new Intent(LOGIN.this, Notification.class));
+            finish(); // Finish the LoginActivity to prevent going back to it when pressing back button from AyzActivity
+        } else {
+            // Redirect to MainActivity
+            startActivity(new Intent(LOGIN.this, MainActivity.class));
+            finish(); // Finish the LoginActivity to prevent going back to it when pressing back button from MainActivity
         }
     }
 
@@ -103,22 +119,13 @@ public class LOGIN extends AppCompatActivity {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             if (user != null) {
                                 Toast.makeText(LOGIN.this, "Login successful.", Toast.LENGTH_SHORT).show();
-
-
-                                if (aadharNumber.equals("258025802580") && password.equals("#Hello1")) {
-                                    // Redirect to AyzActivity
+                                if (aadharNumber.equals("678901234567") && password.equals("#Hi1234")) {
+                                    // Redirect to Notification Activity
                                     startActivity(new Intent(LOGIN.this, Notification.class));
-                                    finish(); // Finish the MainActivity to prevent going back to it when pressing back button from AyzActivity
+                                    finish(); // Finish the LoginActivity to prevent going back to it when pressing back button from Notification Activity
+                                } else {
+                                    redirectToHome(user);
                                 }
-                                else {
-                                    Intent intent = new Intent(LOGIN.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                    // Optional: finish the current activity if you don't want to come back to it with the back button
-
-                                }
-
-
                             } else {
                                 Toast.makeText(LOGIN.this, "User is null.", Toast.LENGTH_SHORT).show();
                             }
@@ -129,7 +136,4 @@ public class LOGIN extends AppCompatActivity {
                     }
                 });
     }
-
-
-
 }

@@ -7,6 +7,7 @@ import static com.example.navigationapp.MainActivity.redirectActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -21,18 +22,16 @@ public class FertilizerRecommendation extends AppCompatActivity {
         setContentView(R.layout.activity_fertilizer);
         drawerLayout =findViewById(R.id.drawer_layout);
         WebView webview=findViewById(R.id.webfertilizer);
+
+        Resources res = getResources();
+        String variable1 = res.getString(R.string.fertilizerurl);
+
+
         WebSettings webSettings = webview.getSettings();
         webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         webSettings.setJavaScriptEnabled(true);
 
-        webview.loadUrl("http://16.171.70.35:8080/fertilizer");
-
-
-
-
-
-        //paste link here
-
+        webview.loadUrl(variable1);
     }
     // MENU OPENS
     public void ClickMenu(View view) {
@@ -94,6 +93,10 @@ public class FertilizerRecommendation extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         closeDrawer(drawerLayout);
+    }
+    public void ClickSettings(View view){
+        redirectActivity(this, Settings.class);
+
     }
     ////
 }

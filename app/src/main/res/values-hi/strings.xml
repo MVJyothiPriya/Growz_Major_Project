@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Growz</string>
+    <string name="cropurl">16.16.144.248:8080/soilpredicthindi</string>
+    <string name="fertilizerurl">16.16.144.248:8080/fertilizerhindi</string>
+    <string name="yieldurl">16.16.144.248:8080/yieldhindi</string>
+
+
+    <string name="home">घर</string>
+    <string name="Crop">फसल की भविष्यवाणी</string>
+    <string name="Plant">पौधे की बीमारी</string>
+    <string name="fertilizer">उर्वरक</string>
+    <string name="market">बाजार की मांग</string>
+    <string name="yield">कृषि उत्पाद</string>
+    <string name="location">जगह</string>
+    <string name="settings">समायोजन</string>
+    <string name="feedback">प्रतिक्रिया</string>
+    <string name="logout">लॉग आउट</string>
+    <string name="name">नाम</string>
+    <string name="email">ईमेल</string>
+    <string name="feedbackc">प्रतिक्रिया</string>
+    <string name="submit">जमा करना</string>
+    <string name="growz">ग्रोज़</string>
+    <string name="selectimage">छवि चुने</string>
+
+
+
+</resources>

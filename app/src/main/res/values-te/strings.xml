@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cropurl">16.16.144.248:8080/soilpredicttelugu</string>
+    <string name="fertilizerurl">16.16.144.248:8080/fertilizertelugu</string>
+    <string name="yieldurl">16.16.144.248:8080/yieldtelugu</string>
+
+
+
+
+
+
+    <string name="app_name">Growz</string>
+
+
+    <string name="home">హోమ్</string>
+    <string name="Crop">పంట అంచనా</string>
+    <string name="Plant">చెట్టు వ్యాధి</string>
+    <string name="fertilizer">ఎరువులు</string>
+    <string name="market">మార్కెట్ డిమాండ్</string>
+    <string name="yield">పంట దిగుబడి</string>
+    <string name="location">స్థలం ఆధారంగా</string>
+    <string name="settings">సెట్టింగులు</string>
+    <string name="feedback">అభిప్రాయం</string>
+    <string name="logout">లాగ్అవుట్</string>
+
+    <string name="name">పేరు</string>
+    <string name="email">ఇమెయిల్</string>
+    <string name="feedbackc">అభిప్రాయం</string>
+
+    <string name="submit">సమర్పించండి</string>
+
+    <string name="growz">గ్రోజ్</string>
+    <string name="selectimage">చిత్రాన్ని ఎంచుకోండి</string>
+
+
+</resources>

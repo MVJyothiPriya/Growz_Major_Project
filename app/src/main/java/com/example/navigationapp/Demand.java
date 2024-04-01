@@ -94,6 +94,10 @@ public class Demand extends AppCompatActivity {
         super.onPause();
         closeDrawer(drawerLayout);
     }
+    public void ClickSettings(View view){
+        redirectActivity(this, Settings.class);
+
+    }
     ////
 
 }

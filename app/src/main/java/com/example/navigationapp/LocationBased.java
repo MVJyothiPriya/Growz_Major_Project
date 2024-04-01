@@ -91,4 +91,8 @@ public class LocationBased extends AppCompatActivity {
         super.onPause();
         closeDrawer(drawerLayout);
     }
+    public void ClickSettings(View view){
+        redirectActivity(this, Settings.class);
+
+    }
 }

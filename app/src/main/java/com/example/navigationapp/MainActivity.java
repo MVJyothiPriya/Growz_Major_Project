@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
 //
     DrawerLayout drawerLayout;
@@ -74,6 +76,10 @@ public void ClickSurveyform(View view){
         redirectActivity(this, CropYield.class);
 
     }
+    public void ClickSettings(View view){
+        redirectActivity(this, Settings.class);
+
+    }
 
     //feedback opens
     public void Clickfeedback(View view){
@@ -115,8 +121,12 @@ public void ClickSurveyform(View view){
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                activity.finishAffinity();
-                System.exit(0);
+                FirebaseAuth.getInstance().signOut(); // Logout the user
+                // Redirect to LOGIN activity
+                Intent intent = new Intent(activity, LOGIN.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                activity.startActivity(intent);
+                activity.finish(); // Finish the current activity to prevent going back to it when pressing back button
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -127,6 +137,11 @@ public void ClickSurveyform(View view){
         });
         builder.show();
     }
+
+
+
+
+
     // redirected to pages
     public static void redirectActivity(Activity activity, Class aClass) {
         Intent intent = new Intent(activity, aClass);

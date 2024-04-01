@@ -17,13 +17,10 @@
 
         <include
             layout="@layout/toolbar_layout"/>
-        <TextView
+        <WebView
+            android:id="@+id/webview_about_us"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="About Us"
-            android:textSize="50sp"
-            android:textStyle="bold"
-            android:gravity="center"/>
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 

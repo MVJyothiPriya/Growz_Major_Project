@@ -7,6 +7,7 @@ import static com.example.navigationapp.MainActivity.redirectActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -15,21 +16,22 @@ import android.webkit.WebView;
 public class CropPrediction extends AppCompatActivity {
     DrawerLayout drawerLayout;
 // DRAWER DECLARATION
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cropprediction);
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_cropprediction);
 
-        drawerLayout =findViewById(R.id.drawer_layout);
-        WebView webview2=findViewById(R.id.webcrop);
-        WebSettings webSettings = webview2.getSettings();
-        webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-        webSettings.setJavaScriptEnabled(true);
-        webview2.loadUrl("http://16.171.70.35:8080/");
+    drawerLayout =findViewById(R.id.drawer_layout);
+    WebView webview2=findViewById(R.id.webcrop);
 
+    Resources res = getResources();
+    String variable1 = res.getString(R.string.cropurl);
 
+    WebSettings webSettings = webview2.getSettings();
+    webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+    webSettings.setJavaScriptEnabled(true);
+    webview2.loadUrl(variable1);
     }
-
 
 
 
@@ -99,6 +101,10 @@ public class CropPrediction extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         closeDrawer(drawerLayout);
+    }
+    public void ClickSettings(View view){
+        redirectActivity(this, Settings.class);
+
     }
     ////
 
