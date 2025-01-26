@@ -30,28 +30,28 @@
 <body>
 
 <div class="container mt-5">
-    <h2>Crop Prices</h2>
+    <h2>పంటల ధరలు</h2>
 
     <!-- Input Form -->
     <form>
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label for="stateInput">State</label>
+                <label for="stateInput">రాష్ట్రం</label>
                 <input type="text" class="form-control" id="stateInput" oninput="showStateSuggestions()">
                 <ul id="suggestion-list1" class="suggestion-list"></ul>
             </div>
             <div class="form-group col-md-4">
-                <label for="districtInput">District</label>
+                <label for="districtInput">జిల్లా</label>
                 <input type="text" class="form-control" id="districtInput" oninput="showDistrictSuggestions()">
                 <ul id="suggestion-list2" class="suggestion-list"></ul>
             </div>
             <div class="form-group col-md-4">
-                <label for="cropInput">Crop</label>
+                <label for="cropInput">పంట</label>
                 <input type="text" class="form-control" id="cropInput" oninput="showCropSuggestions()">
                 <ul id="suggestion-list3" class="suggestion-list"></ul>
             </div>
         </div>
-        <button type="button" class="btn btn-primary" onclick="submitForm()">Get Price</button>
+        <button type="button" class="btn btn-primary" onclick="submitForm()">ధరను అంచనా వేయండి</button>
     </form>
 
     <!-- Output Display -->
@@ -605,7 +605,7 @@
         );
 
         if (price) {
-            outputElement.innerHTML = `<p>State: ${stateInputValue}</p><p>District: ${districtInputValue}</p><p>Crop: ${cropInputValue}</p><p>Price (per acre): ${price[3]}</p>`;
+            outputElement.innerHTML = `<p>రాష్ట్రం: ${stateInputValue}</p><p>జిల్లా: ${districtInputValue}</p><p>పంట: ${cropInputValue}</p><p>ధర (ఎకరానికి): ${price[3]}</p>`;
         } else {
             outputElement.innerHTML = `<p>No data found for the specified input.</p>`;
         }

@@ -61,25 +61,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:minHeight="48dp"
 
-        android:onClick="ClickSurveyform">
+        android:onClick="ClickSurveyform"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginStart="16dp"
 
-            android:text="@string/Crop"
+            android:layout_weight="1"
             android:padding="12dp"
-            android:layout_marginStart="16dp" />
+            android:text="@string/Crop" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/survey_icon"
-            android:layout_marginEnd="16dp" />
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/plant" />
 
     </LinearLayout>
 
@@ -105,7 +106,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/status_ic"
+            android:src="@drawable/disease"
             android:layout_marginEnd="16dp" />
 
     </LinearLayout>
@@ -132,7 +133,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/complaint_ic"
+            android:src="@drawable/fertilizer"
             android:layout_marginEnd="16dp" />
 
     </LinearLayout>
@@ -156,7 +157,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/complaint_ic"
+            android:src="@drawable/marketdemand"
             android:layout_marginEnd="16dp" />
 
     </LinearLayout>
@@ -182,7 +183,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/complaint_ic"
+            android:src="@drawable/plant"
             android:layout_marginEnd="16dp" />
 
     </LinearLayout>
@@ -207,7 +208,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/feedback_ic"
+            android:src="@drawable/location"
             android:layout_marginEnd="16dp" />
 
     </LinearLayout>
@@ -237,7 +238,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/feedback_ic"
+            android:src="@drawable/settings"
             android:layout_marginEnd="16dp" />
 
     </LinearLayout>
@@ -284,11 +285,13 @@
             android:padding="12dp"
             android:layout_marginStart="16dp" />
 
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/logout_ic"
             android:layout_marginEnd="16dp" />
+
 
     </LinearLayout>
 

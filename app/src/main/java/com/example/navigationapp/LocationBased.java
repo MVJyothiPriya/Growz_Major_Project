@@ -7,6 +7,7 @@ import static com.example.navigationapp.MainActivity.redirectActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -22,11 +23,15 @@ public class LocationBased extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_based);
+
+        Resources res = getResources();
+        String variable1 = res.getString(R.string.locate);
+
         drawerLayout = findViewById(R.id.drawer_layout);
         WebView webviewl=findViewById(R.id.weblocation);
         WebSettings webSettings = webviewl.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webviewl.loadUrl("file:///android_asset/location.html");
+        webviewl.loadUrl(variable1);
 
     }
     // MENU OPENS

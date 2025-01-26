@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Growz</string>
-    <string name="cropurl">16.16.144.248:8080/soilpredicthindi</string>
-    <string name="fertilizerurl">16.16.144.248:8080/fertilizerhindi</string>
-    <string name="yieldurl">16.16.144.248:8080/yieldhindi</string>
+    <string name="cropurl">13.48.31.210:8080/soilpredicthindi</string>
+    <string name="fertilizerurl">13.48.31.210:8080/fertilizerhindi</string>
+    <string name="yieldurl">13.48.31.210:8080/yieldhindi</string>
+    <string name="locate">"file:///android_asset/locationhindi.html"</string>
+    <string name="demand">"file:///android_asset/demandhindi.html"</string>
 
 
     <string name="home">घर</string>
@@ -23,6 +24,17 @@
     <string name="submit">जमा करना</string>
     <string name="growz">ग्रोज़</string>
     <string name="selectimage">छवि चुने</string>
+    <string name="state_label">राज्य</string>
+    <string name="district_label">जिला</string>
+    <string name="crop_label">फसल</string>
+    <string name="Name">नाम</string>
+    <string name="Aadhar_number">आधार नंबर</string>
+    <string name="Feedback">प्रतिक्रिया</string>
+    <string name="Submit">जमा करना</string>
+    <string name="AboutUs">हमारे बारे में</string>
+    <string name="ContactUs">संपर्क करें</string>
+
+
 
 
 

@@ -8,6 +8,7 @@ import static com.example.navigationapp.MainActivity.redirectActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 
@@ -24,12 +25,19 @@ public class Demand extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demand);
+
+
+
+        Resources res = getResources();
+        String variable1 = res.getString(R.string.demand);
+
         drawerLayout =findViewById(R.id.drawer_layout);
 
         WebView webview=findViewById(R.id.webdemand);
         WebSettings webSettings = webview.getSettings();
-        webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);        webSettings.setJavaScriptEnabled(true);
-        webview.loadUrl("file:///android_asset/demand.html");
+        webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        webSettings.setJavaScriptEnabled(true);
+        webview.loadUrl(variable1);
 
 
     }
@@ -77,6 +85,10 @@ public class Demand extends AppCompatActivity {
         redirectActivity(this, Demand.class);
 
     }
+    public void ClickSettings(View view){
+        redirectActivity(this, Settings.class);
+
+    }
 
     //feedback opens
     public void Clickfeedback(View view){
@@ -94,11 +106,6 @@ public class Demand extends AppCompatActivity {
         super.onPause();
         closeDrawer(drawerLayout);
     }
-    public void ClickSettings(View view){
-        redirectActivity(this, Settings.class);
-
-    }
     ////
 
 }
-

@@ -26,6 +26,7 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class PlantDisease extends AppCompatActivity {
 
@@ -35,6 +36,7 @@ public class PlantDisease extends AppCompatActivity {
     private Bitmap selectedImageBitmap;
     private Interpreter tflite;
     private List<String> labels;
+    private Locale currentLocale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class PlantDisease extends AppCompatActivity {
         Button selectImageButton = findViewById(R.id.selectImageButton);
         selectedImageView = findViewById(R.id.selectedImageView);
         resultTextView = findViewById(R.id.resultTextView);
+
+        currentLocale = getResources().getConfiguration().locale;
 
         try {
             tflite = new Interpreter(loadModelFile());
@@ -69,8 +73,20 @@ public class PlantDisease extends AppCompatActivity {
     private List<String> loadLabelsFile() throws IOException {
         List<String> labels = new ArrayList<>();
         BufferedReader reader = null;
+        String language = getLanguagePreference();
+        String labelFileName;
+        switch (language) {
+            case "te":
+                labelFileName = "labelste.txt"; // Telugu
+                break;
+            case "hi":
+                labelFileName = "labelshi.txt"; // Hindi
+                break;
+            default:
+                labelFileName = "labels.txt"; // Default to English
+        }
         try {
-            reader = new BufferedReader(new InputStreamReader(getAssets().open("labels.txt")));
+            reader = new BufferedReader(new InputStreamReader(getAssets().open(labelFileName)));
             String line;
             while ((line = reader.readLine()) != null) {
                 labels.add(line);
@@ -87,6 +103,10 @@ public class PlantDisease extends AppCompatActivity {
             }
         }
         return labels;
+    }
+
+    private String getLanguagePreference() {
+        return currentLocale.getLanguage();
     }
 
     private void openGallery() {
@@ -106,7 +126,7 @@ public class PlantDisease extends AppCompatActivity {
                     selectedImageView.setImageBitmap(selectedImageBitmap);
                     classifyPlantDisease(selectedImageBitmap);
                 } else {
-                    resultTextView.setText("Please select a leaf or plant image");
+                    displaySelectImageMessage();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -186,6 +206,21 @@ public class PlantDisease extends AppCompatActivity {
         } else {
             Log.e("PlantDisease", "Interpreter is null or bitmap is null");
         }
+    }
+
+    private void displaySelectImageMessage() {
+        String selectImageMessage;
+        switch (currentLocale.getLanguage()) {
+            case "te":
+                selectImageMessage = "దయచేసి ఒక ఆకు లేదా మొక్కను ఎంచుకోండి";
+                break;
+            case "hi":
+                selectImageMessage = "कृपया एक पत्ती या पौधा चित्र का चयन करें";
+                break;
+            default:
+                selectImageMessage = "Please select a leaf or plant image";
+        }
+        resultTextView.setText(selectImageMessage);
     }
 
     private int getMaxIndex(float[] probabilities) {

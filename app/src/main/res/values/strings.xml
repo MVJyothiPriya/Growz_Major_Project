@@ -1,7 +1,9 @@
 <resources>
-    <string name="cropurl">16.16.144.248:8080</string>
-    <string name="fertilizerurl">16.16.144.248:8080/fertilizer</string>
-    <string name="yieldurl">16.16.144.248:8080/yield</string>
+    <string name="cropurl">13.48.31.210:8080</string>
+    <string name="fertilizerurl">13.48.31.210:8080/fertilizer</string>
+    <string name="yieldurl">13.48.31.210:8080/yield</string>
+    <string name="locate">"file:///android_asset/location.html"</string>
+    <string name="demand">"file:///android_asset/demand.html"</string>
 
 
 
@@ -29,6 +31,19 @@
 
     <string name="growz">GROWZ</string>
     <string name="selectimage">Select Image</string>
+    <string name="state_label">State</string>
+    <string name="district_label">District</string>
+    <string name="crop_label">Crop</string>
+    <string name="Name">Name</string>
+    <string name="Aadhar_number">Aadhar_number</string>
+    <string name="Feedback">Feedback</string>
+    <string name="Submit">Submit</string>
+    <string name="AboutUs">About Us</string>
+    <string name="ContactUs">Contact Us</string>
+
+
+
+
 
 
 </resources>

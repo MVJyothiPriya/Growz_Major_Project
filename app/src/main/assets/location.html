@@ -888,17 +888,38 @@
 			}
 			else {
 				// Proceed with form submission
-				document.getElementById("requiredMessage").style.display = "none";
+                document.getElementById("requiredMessage").style.display = "none";
 
-				// Your form submission logic here
-				const outputElement = document.getElementById("output");
+                // Your form submission logic here
+                const outputElement = document.getElementById("output");
+                
+                // Assuming you have an object named 'crops' with district-wise crop information
+                const selectedCrops = crops[districtInputValue] || [];
+                
+                // Clear the previous content of outputElement
+                outputElement.innerHTML = '';
+                
+                // Add a heading before displaying the crops
+                const heading = document.createElement('h2');
+                heading.textContent = 'Crops:';
+                heading.style.textAlign = 'center'; // Center align the heading
+                heading.style.color = 'black'; // Set the color to a dark shade, e.g., black (#000) or dark gray (#333)
+                heading.style.fontWeight = 'bold'; // Make the heading bold
 
-				// Assuming you have an object named 'crops' with district-wise crop information
-				const selectedCrops = crops[districtInputValue] || [];
+                outputElement.appendChild(heading);
+                
+                
+                // Loop through selectedCrops and append each crop to outputElement with right alignment
+                selectedCrops.forEach(crop => {
+                    const h3 = document.createElement('h3');
+                    h3.style.color = 'black';
+                    h3.style.textAlign = 'center'; // Align text to the center
+                    h3.textContent = crop;
+                    outputElement.appendChild(h3);
+                });
+                
 
-				// Displaying the selected state, district, and crops
-				outputElement.innerHTML = `<p>State: ${stateInputValue}</p><p>District: ${districtInputValue}</p><p>Crops: ${selectedCrops.join(", ")}</p>`;
-			}
+            }
 		}
 		
       </script>

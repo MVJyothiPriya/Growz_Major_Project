@@ -1,7 +1,5 @@
 package com.example.navigationapp;
 
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,7 +21,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private TextView backToLoginText;
     private FirebaseAuth mAuth;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,9 +66,20 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(ForgotPasswordActivity.this, "Password updated successfully", Toast.LENGTH_SHORT).show();
-                            // Display reset successful message
-                            Toast.makeText(ForgotPasswordActivity.this, "Reset successfully", Toast.LENGTH_SHORT).show();
+                            // Update password in Firebase
+                            mAuth.getCurrentUser().updatePassword(newPassword)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(ForgotPasswordActivity.this, "Password updated successfully", Toast.LENGTH_SHORT).show();
+                                                // Display reset successful message
+                                                Toast.makeText(ForgotPasswordActivity.this, "Reset successfully", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(ForgotPasswordActivity.this, "Failed to update password", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
                         } else {
                             Toast.makeText(ForgotPasswordActivity.this, "Failed to update password", Toast.LENGTH_SHORT).show();
                         }

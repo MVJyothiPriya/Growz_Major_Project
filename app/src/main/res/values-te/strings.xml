@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="cropurl">16.16.144.248:8080/soilpredicttelugu</string>
-    <string name="fertilizerurl">16.16.144.248:8080/fertilizertelugu</string>
-    <string name="yieldurl">16.16.144.248:8080/yieldtelugu</string>
+    <string name="cropurl">13.48.31.210:8080/soilpredicttelugu</string>
+    <string name="fertilizerurl">13.48.31.210:8080/fertilizertelugu</string>
+    <string name="yieldurl">13.48.31.210:8080/yieldtelugu</string>
+    <string name="locate">"file:///android_asset/locationtelugu.html"</string>
+    <string name="demand">"file:///android_asset/demandtelugu.html"</string>
 
 
 
@@ -32,5 +34,14 @@
     <string name="growz">గ్రోజ్</string>
     <string name="selectimage">చిత్రాన్ని ఎంచుకోండి</string>
 
+    <string name="state_label">రాష్ట్రం</string>
+    <string name="district_label">జిల్లా</string>
+    <string name="crop_label">పొలం</string>
+    <string name="Name">పేరు</string>
+    <string name="Aadhar_number">ఆధార్ నంబర్</string>
+    <string name="Feedback">అభిప్రాయం</string>
+    <string name="Submit">సమర్పించండి</string>
+    <string name="AboutUs">మా గురించి</string>
+    <string name="ContactUs">మమ్మల్ని సంప్రదించండి</string>
 
 </resources>
