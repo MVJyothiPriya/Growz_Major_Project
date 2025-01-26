@@ -1,0 +1,247 @@
+[33mcommit 792fce336f2e2ce44769de7527836b941c874774[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m
+Author: VenkataJyothiPriya <20bq1a4237@vvit.net>
+Date:   Sun Jan 26 12:14:39 2025 +0530
+
+    Add .gitattributes to track large files with LFS
+
+ .gitattributes | 1 [32m+[m
+ 1 file changed, 1 insertion(+)
+
+[33mcommit 7812e2eee7c726306f5bc5ec2f912f7bc8d190d2[m
+Author: VenkataJyothiPriya <20bq1a4237@vvit.net>
+Date:   Sun Jan 26 11:58:56 2025 +0530
+
+    changes
+
+ .gitattributes                   |   1 [32m+[m
+ app/src/main/assets/model.tflite | Bin [31m118381956[m -> [32m134[m bytes
+ 2 files changed, 1 insertion(+)
+
+[33mcommit 97c597a6c5cc3e59b0608b528bcb25e6dc4ec66c[m
+Author: VenkataJyothiPriya <20bq1a4237@vvit.net>
+Date:   Sun Jan 26 11:20:41 2025 +0530
+
+    final commit
+
+ app/src/main/assets/about_us.html                  |  74 [31m--[m
+ app/src/main/assets/aboutusen.html                 |  88 [32m++[m
+ app/src/main/assets/aboutushi.html                 |  88 [32m++[m
+ app/src/main/assets/aboutuste.html                 |  88 [32m++[m
+ app/src/main/assets/contactuss.html                |  53 [32m++[m
+ app/src/main/assets/contactuste.html               |  53 [32m++[m
+ app/src/main/assets/demand.html                    | 453 [32m+++++++++[m[31m-[m
+ app/src/main/assets/demandhindi.html               | 616 [32m++++++++++++++[m
+ app/src/main/assets/demandtelugu.html              | 616 [32m++++++++++++++[m
+ app/src/main/assets/labelshi.txt                   |  38 [32m+[m
+ app/src/main/assets/labelste.txt                   |  38 [32m+[m
+ app/src/main/assets/location.html                  |  37 [32m+[m[31m-[m
+ app/src/main/assets/locationhindi.html             | 931 [32m+++++++++++++++++++++[m
+ app/src/main/assets/locationtelugu.html            | 928 [32m++++++++++++++++++++[m
+ .../com/example/navigationapp/AboutusActivity.java |  63 [32m+[m[31m-[m
+ .../example/navigationapp/ContactusActivity.java   |  64 [32m+[m[31m-[m
+ .../navigationapp/CreateAccountActivity.java       |  49 [32m+[m[31m-[m
+ .../java/com/example/navigationapp/Demand.java     |  23 [32m+[m[31m-[m
+ .../navigationapp/ForgotPasswordActivity.java      |  22 [32m+[m[31m-[m
+ .../com/example/navigationapp/LocationBased.java   |   7 [32m+[m[31m-[m
+ .../com/example/navigationapp/MainActivity.java    |   3 [32m+[m
+ .../com/example/navigationapp/PlantDisease.java    |  39 [32m+[m[31m-[m
+ app/src/main/res/drawable/crop.png                 | Bin [31m0[m -> [32m662239[m bytes
+ app/src/main/res/drawable/disease.xml              |   5 [32m+[m
+ app/src/main/res/drawable/fertilizer.xml           |   5 [32m+[m
+ app/src/main/res/drawable/img_3.png                | Bin [31m0[m -> [32m96521[m bytes
+ app/src/main/res/drawable/img_4.png                | Bin [31m0[m -> [32m104993[m bytes
+ app/src/main/res/drawable/location.xml             |   5 [32m+[m
+ app/src/main/res/drawable/marketdemand.xml         |   5 [32m+[m
+ app/src/main/res/drawable/plant.xml                |   5 [32m+[m
+ app/src/main/res/drawable/settings.xml             |   5 [32m+[m
+ app/src/main/res/layout/activity_demand.xml        |  31 [32m+[m[31m-[m
+ app/src/main/res/layout/activity_feedback.xml      |   8 [32m+[m[31m-[m
+ app/src/main/res/layout/activity_main.xml          |  17 [32m+[m[31m-[m
+ app/src/main/res/layout/nav_drawer_layout.xml      |  29 [32m+[m[31m-[m
+ app/src/main/res/values-hi/strings.xml             |  20 [32m+[m[31m-[m
+ app/src/main/res/values-te/strings.xml             |  17 [32m+[m[31m-[m
+ app/src/main/res/values/strings.xml                |  21 [32m+[m[31m-[m
+ 38 files changed, 4339 insertions(+), 205 deletions(-)
+
+[33mcommit d30e939e6a354fdfae53796009b3d58ef540f8e4[m
+Author: VenkataJyothiPriya <20bq1a4237@vvit.net>
+Date:   Mon Apr 1 10:13:47 2024 +0530
+
+    final commit
+
+ app/build.gradle                                   |   1 [32m+[m
+ app/src/main/AndroidManifest.xml                   |  19 [32m+[m[31m-[m
+ app/src/main/assets/about_us.html                  |  74 [32m+++++++[m
+ app/src/main/assets/abt.jpg                        | Bin [31m0[m -> [32m813762[m bytes
+ app/src/main/assets/cnt.jpg                        | Bin [31m0[m -> [32m188084[m bytes
+ app/src/main/assets/contact_us.html                |  55 [32m+++++[m
+ app/src/main/assets/labels.txt                     |  38 [32m++++[m
+ app/src/main/assets/model.tflite                   | Bin [31m0[m -> [32m118381956[m bytes
+ .../com/example/navigationapp/AboutusActivity.java |  83 [32m+++[m[31m-----[m
+ .../example/navigationapp/ContactusActivity.java   |  79 [32m+++[m[31m----[m
+ .../navigationapp/CreateAccountActivity.java       | 115 [32m+++++[m[31m-----[m
+ .../com/example/navigationapp/CropPrediction.java  |  28 [32m++[m[31m-[m
+ .../java/com/example/navigationapp/CropYield.java  |  11 [32m+[m[31m-[m
+ .../java/com/example/navigationapp/Demand.java     |   4 [32m+[m
+ .../navigationapp/FertilizerRecommendation.java    |  19 [32m+[m[31m-[m
+ .../main/java/com/example/navigationapp/LOGIN.java |  42 [32m++[m[31m--[m
+ .../com/example/navigationapp/LocationBased.java   |   4 [32m+[m
+ .../com/example/navigationapp/MainActivity.java    |  19 [32m+[m[31m-[m
+ .../com/example/navigationapp/PlantDisease.java    | 231 [32m+++++++++++++++[m[31m------[m
+ .../java/com/example/navigationapp/Settings.java   | 168 [32m+++++++++++++++[m
+ app/src/main/res/drawable/av.png                   | Bin [31m0[m -> [32m8613[m bytes
+ app/src/main/res/drawable/img.png                  | Bin [31m0[m -> [32m96521[m bytes
+ app/src/main/res/drawable/img_1.png                | Bin [31m0[m -> [32m104993[m bytes
+ app/src/main/res/layout/activity_aboutus.xml       |   9 [32m+[m[31m-[m
+ app/src/main/res/layout/activity_contactus.xml     |   9 [32m+[m[31m-[m
+ app/src/main/res/layout/activity_feedback.xml      |   2 [32m+[m[31m-[m
+ app/src/main/res/layout/activity_main.xml          |  15 [32m+[m[31m-[m
+ app/src/main/res/layout/activity_plantdisease.xml  |  65 [32m+++[m[31m---[m
+ app/src/main/res/layout/activity_settings.xml      |  51 [32m+++++[m
+ app/src/main/res/layout/nav_drawer_layout.xml      |  52 [32m+++[m[31m--[m
+ app/src/main/res/layout/toolbar_layout.xml         |   9 [32m+[m[31m-[m
+ app/src/main/res/values-hi/strings.xml             |  29 [32m+++[m
+ app/src/main/res/values-te/strings.xml             |  36 [32m++++[m
+ app/src/main/res/values/strings.xml                |  31 [32m+++[m
+ 34 files changed, 958 insertions(+), 340 deletions(-)
+
+[33mcommit fc6385b784d104724ea3c8c01ff8f75511392259[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: bhargavsai259 <bhargavsaikumar259@gmail.com>
+Date:   Wed Feb 28 12:36:52 2024 +0530
+
+    init
+
+ .idea/compiler.xml                                 |   2 [32m+[m[31m-[m
+ .idea/misc.xml                                     |   3 [32m+[m[31m-[m
+ .idea/vcs.xml                                      |   6 [32m+[m
+ app/build.gradle                                   |  13 [32m+[m
+ app/google-services.json                           | 106 [32m+++[m
+ app/src/main/AndroidManifest.xml                   |  31 [32m+[m[31m-[m
+ app/src/main/assets/demand.html                    | 173 [32m++++[m
+ app/src/main/assets/location.html                  | 906 [32m+++++++++++++++++++++[m
+ app/src/main/assets/no_internet.html               |  37 [32m+[m
+ .../com/example/navigationapp/AboutusActivity.java |  11 [32m+[m[31m-[m
+ .../example/navigationapp/ContactusActivity.java   |  11 [32m+[m[31m-[m
+ .../navigationapp/CreateAccountActivity.java       |  93 [32m+++[m
+ ...SurveyformActivity.java => CropPrediction.java} |  46 [32m+[m[31m-[m
+ .../{Registration.java => CropYield.java}          |  39 [32m+[m[31m-[m
+ .../{ComplaintboxActivity.java => Demand.java}     |  45 [32m+[m[31m-[m
+ .../navigationapp/FcmNotificationsSender.java      |  96 [32m+++[m
+ .../example/navigationapp/FeedbackActivity.java    |  83 [32m+[m[31m-[m
+ .../navigationapp/FertilizerRecommendation.java    |  99 [32m+++[m
+ .../navigationapp/FirebaseMessagingService.java    |  95 [32m+++[m
+ .../navigationapp/ForgotPasswordActivity.java      |  81 [32m++[m
+ .../main/java/com/example/navigationapp/LOGIN.java | 135 [32m+++[m
+ .../com/example/navigationapp/LocationBased.java   |  94 [32m+++[m
+ .../com/example/navigationapp/MainActivity.java    |  26 [32m+[m[31m-[m
+ .../com/example/navigationapp/Notification.java    |  34 [32m+[m
+ .../com/example/navigationapp/Officerdesk.java     |  16 [32m+[m[31m-[m
+ ...{CheckstatusActivity.java => PlantDisease.java} |  29 [32m+[m[31m-[m
+ .../java/com/example/navigationapp/Userlogin.java  |   6 [32m+[m[31m-[m
+ app/src/main/res/drawable/icon.xml                 |   5 [32m+[m
+ ..._surveyform.xml => activity_cropprediction.xml} |  18 [32m+[m[31m-[m
+ ...ity_complaintbox.xml => activity_cropyield.xml} |   9 [32m+[m[31m-[m
+ app/src/main/res/layout/activity_demand.xml        |  48 [32m++[m
+ app/src/main/res/layout/activity_feedback.xml      |  41 [32m+[m[31m-[m
+ app/src/main/res/layout/activity_fertilizer.xml    |  45 [32m+[m
+ .../main/res/layout/activity_location_based.xml    |  45 [32m+[m
+ app/src/main/res/layout/activity_login.xml         | 118 [32m+++[m
+ app/src/main/res/layout/activity_main.xml          |  58 [31m--[m
+ ...y_checkstatus.xml => activity_plantdisease.xml} |   4 [32m+[m[31m-[m
+ app/src/main/res/layout/createaccount.xml          |  75 [32m++[m
+ app/src/main/res/layout/forgotpassword.xml         |  67 [32m++[m
+ app/src/main/res/layout/nav_drawer_layout.xml      |  83 [32m+[m[31m-[m
+ app/src/main/res/layout/notification.xml           |  36 [32m+[m
+ app/src/main/res/layout/toolbar_layout.xml         |   2 [32m+[m[31m-[m
+ app/src/main/res/values/strings.xml                |   2 [32m+[m[31m-[m
+ app/src/main/res/xml/network_security_config.xml   |   5 [32m+[m
+ build.gradle                                       |  10 [32m+[m[31m-[m
+ gradle.properties                                  |   4 [32m+[m[31m-[m
+ gradle/wrapper/gradle-wrapper.properties           |   2 [32m+[m[31m-[m
+ 47 files changed, 2844 insertions(+), 149 deletions(-)
+
+[33mcommit f99719161205713ae894b033f7c2482ed5902c8d[m
+Author: bhargavsai259 <bhargavsaikumar259@gmail.com>
+Date:   Sat Jul 1 09:43:43 2023 +0530
+
+    first commit
+
+ .gitignore                                         |  15 [32m++[m
+ .idea/.gitignore                                   |   3 [32m+[m
+ .idea/.name                                        |   1 [32m+[m
+ .idea/compiler.xml                                 |   6 [32m+[m
+ .idea/gradle.xml                                   |  19 [32m++[m
+ .idea/misc.xml                                     |  10 [32m++[m
+ app/.gitignore                                     |   1 [32m+[m
+ app/build.gradle                                   |  39 [32m+++++[m
+ app/proguard-rules.pro                             |  21 [32m+++[m
+ .../navigationapp/ExampleInstrumentedTest.java     |  26 [32m+++[m
+ app/src/main/AndroidManifest.xml                   |  52 [32m++++++[m
+ .../com/example/navigationapp/AboutusActivity.java |  72 [32m++++++++[m
+ .../example/navigationapp/CheckstatusActivity.java |  70 [32m++++++++[m
+ .../navigationapp/ComplaintboxActivity.java        |  69 [32m++++++++[m
+ .../example/navigationapp/ContactusActivity.java   |  69 [32m++++++++[m
+ .../example/navigationapp/FeedbackActivity.java    |  69 [32m++++++++[m
+ .../com/example/navigationapp/MainActivity.java    | 135 [32m+++++++++++++++[m
+ .../com/example/navigationapp/Officerdesk.java     |  70 [32m++++++++[m
+ .../com/example/navigationapp/Registration.java    |  70 [32m++++++++[m
+ .../example/navigationapp/SurveyformActivity.java  |  71 [32m++++++++[m
+ .../java/com/example/navigationapp/Userlogin.java  |  70 [32m++++++++[m
+ .../res/drawable-v24/ic_launcher_foreground.xml    |  30 [32m++++[m
+ app/src/main/res/drawable/bag.xml                  |   5 [32m+[m
+ app/src/main/res/drawable/complaint_ic.xml         |   5 [32m+[m
+ app/src/main/res/drawable/email_ic.xml             |   5 [32m+[m
+ app/src/main/res/drawable/feedback_ic.xml          |   5 [32m+[m
+ app/src/main/res/drawable/ic_home.xml              |   5 [32m+[m
+ .../main/res/drawable/ic_launcher_background.xml   | 170 [32m++++++++++++++++++[m
+ app/src/main/res/drawable/ic_menu.xml              |   5 [32m+[m
+ app/src/main/res/drawable/login.xml                |   5 [32m+[m
+ app/src/main/res/drawable/logout_ic.xml            |   5 [32m+[m
+ app/src/main/res/drawable/officerdesk_ic.xml       |   5 [32m+[m
+ app/src/main/res/drawable/people.xml               |   5 [32m+[m
+ app/src/main/res/drawable/rd.png                   | Bin [31m0[m -> [32m74331[m bytes
+ app/src/main/res/drawable/register.xml             |  12 [32m++[m
+ app/src/main/res/drawable/registration_ic.xml      |  12 [32m++[m
+ app/src/main/res/drawable/status_ic.xml            |   5 [32m+[m
+ app/src/main/res/drawable/survey_icon.xml          |   5 [32m+[m
+ app/src/main/res/drawable/village.jpg              | Bin [31m0[m -> [32m267703[m bytes
+ app/src/main/res/layout/activity_aboutus.xml       |  49 [32m++++++[m
+ app/src/main/res/layout/activity_checkstatus.xml   |  47 [32m+++++[m
+ app/src/main/res/layout/activity_complaintbox.xml  |  47 [32m+++++[m
+ app/src/main/res/layout/activity_contactus.xml     |  47 [32m+++++[m
+ app/src/main/res/layout/activity_feedback.xml      |  49 [32m++++++[m
+ app/src/main/res/layout/activity_main.xml          | 163 [32m++++++++++++++++++[m
+ app/src/main/res/layout/activity_officerdesk.xml   |  51 [32m++++++[m
+ app/src/main/res/layout/activity_registration.xml  |  50 [32m++++++[m
+ app/src/main/res/layout/activity_surveyform.xml    |  51 [32m++++++[m
+ app/src/main/res/layout/activity_userlogin.xml     |  48 [32m++++++[m
+ app/src/main/res/layout/nav_drawer_layout.xml      | 191 [32m+++++++++++++++++++++[m
+ app/src/main/res/layout/toolbar_layout.xml         |  31 [32m++++[m
+ app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml |   5 [32m+[m
+ .../res/mipmap-anydpi-v26/ic_launcher_round.xml    |   5 [32m+[m
+ app/src/main/res/mipmap-anydpi-v33/ic_launcher.xml |   6 [32m+[m
+ app/src/main/res/mipmap-hdpi/ic_launcher.webp      | Bin [31m0[m -> [32m1404[m bytes
+ .../main/res/mipmap-hdpi/ic_launcher_round.webp    | Bin [31m0[m -> [32m2898[m bytes
+ app/src/main/res/mipmap-mdpi/ic_launcher.webp      | Bin [31m0[m -> [32m982[m bytes
+ .../main/res/mipmap-mdpi/ic_launcher_round.webp    | Bin [31m0[m -> [32m1772[m bytes
+ app/src/main/res/mipmap-xhdpi/ic_launcher.webp     | Bin [31m0[m -> [32m1900[m bytes
+ .../main/res/mipmap-xhdpi/ic_launcher_round.webp   | Bin [31m0[m -> [32m3918[m bytes
+ app/src/main/res/mipmap-xxhdpi/ic_launcher.webp    | Bin [31m0[m -> [32m2884[m bytes
+ .../main/res/mipmap-xxhdpi/ic_launcher_round.webp  | Bin [31m0[m -> [32m5914[m bytes
+ app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp   | Bin [31m0[m -> [32m3844[m bytes
+ .../main/res/mipmap-xxxhdpi/ic_launcher_round.webp | Bin [31m0[m -> [32m7778[m bytes
+ app/src/main/res/values-night/themes.xml           |  16 [32m++[m
+ app/src/main/res/values/colors.xml                 |  10 [32m++[m
+ app/src/main/res/values/strings.xml                |   3 [32m+[m
+ app/src/main/res/values/themes.xml                 |  16 [32m++[m
+ app/src/main/res/xml/backup_rules.xml              |  13 [32m++[m
+ app/src/main/res/xml/data_extraction_rules.xml     |  19 [32m++[m
+ .../com/example/navigationapp/ExampleUnitTest.java |  17 [32m++[m
+ build.gradle                                       |   5 [32m+[m
+ gradle.properties                                  |  21 [32m+++[m
+ gradle/wrapper/gradle-wrapper.jar                  | Bin [31m0[m -> [32m59203[m bytes
+ gradle/wrapper/gradle-wrapper.properties           |   6 [32m+[m
+ gradlew                                            | 185 [32m++++++++++++++++++++[m
+ gradlew.bat                                        |  89 [32m++++++++++[m
+ settings.gradle                                    |  16 [32m++[m
+ 78 files changed, 2498 insertions(+)
